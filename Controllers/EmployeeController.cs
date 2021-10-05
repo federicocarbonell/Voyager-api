@@ -16,18 +16,18 @@ namespace VoyageAPI.Controllers
             _context = dataContext;
         }
 
-        [HttpGet()]
-        public ActionResult<EmployeeDTO> Get([FromQuery] int id)
+        [HttpPost()]
+        public ActionResult<EmployeeDTO> Get([FromBody] EmployeeLogin employee)
         {
-            var employee = _context.Employees.FirstOrDefault(e => e.Id.Equals(id));
-            if (employee == null)
+            var emp = _context.Employees.FirstOrDefault(e => e.Email.Equals(employee.Email) && e.Password.Equals(employee.Password));
+            if (emp == null)
             {
                 return NotFound("User does not exist.");
             }
             EmployeeDTO employeeDTO = new EmployeeDTO
             {
-                Id = employee.Id,
-                Name = employee.Name
+                Id = emp.Id,
+                Name = emp.Name
             };
             return Ok(employeeDTO);
         }
