@@ -19,6 +19,9 @@ namespace VoyageAPI.Context
             modelBuilder.Entity<Report>().HasOne(r => r.Employee);
             modelBuilder.Entity<Job>().HasOne(r => r.Employee);
             modelBuilder.Entity<Job>().HasOne(r => r.Product);
+            modelBuilder.Entity<Product>().HasMany(p => p.Jobs);
+            modelBuilder.Entity<Employee>().HasMany(e => e.Jobs);
+            
         }
 
         public DbSet<Employee> Employees { get; set; }

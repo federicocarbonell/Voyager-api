@@ -4,7 +4,6 @@ namespace VoyageAPI.DTOs
     {
         public int Id { get; set; }
         public ProductDTO Product { get; set; }
-        public EmployeeDTO Employee { get; set; }
         public State State { get; set; }
         public string Description { get; set; }
         public string Time { get; set; }
