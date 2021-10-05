@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using VoyageAPI.Adapter;
 using VoyageAPI.Context;
 using VoyageAPI.DTOs;
@@ -23,7 +24,8 @@ namespace VoyageAPI.Controllers
         public ActionResult<JobDTO> GetPendingJobs([FromRoute] int employeeId)
         {
             List<JobDTO> result = JobAdapter.mapJobs(_context.Jobs.AsQueryable()
-                .Where(job => (job.Employee.Id == employeeId && job.State == State.Pending)));
+                .Where(job => (job.Employee.Id == employeeId && job.State == State.Pending))
+                .Include(job => job.Product));;
             if (result == null)
             {
                 return NotFound("No Jobs pending.");
@@ -36,7 +38,8 @@ namespace VoyageAPI.Controllers
         public ActionResult<JobDTO> GetInProcessJobs([FromRoute] int employeeId)
         {
             List<JobDTO> result = JobAdapter.mapJobs(_context.Jobs.AsQueryable()
-                .Where(job => (job.Employee.Id == employeeId && job.State == State.InProcess)));
+                .Where(job => (job.Employee.Id == employeeId && job.State == State.InProcess))
+                .Include(job => job.Product));
             if (result == null)
             {
                 return NotFound("No Jobs in process.");
@@ -49,7 +52,8 @@ namespace VoyageAPI.Controllers
         public ActionResult<JobDTO> GetFinishedJobs([FromRoute] int employeeId)
         {
             List<JobDTO> result = JobAdapter.mapJobs(_context.Jobs.AsQueryable()
-                .Where(job => (job.Employee.Id == employeeId && job.State == State.Finished)));
+                .Where(job => (job.Employee.Id == employeeId && job.State == State.Finished))
+                .Include(job => job.Product));
             if (result == null)
             {
                 return NotFound("No Jobs finished.");

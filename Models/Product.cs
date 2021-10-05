@@ -13,5 +13,6 @@ namespace VoyageAPI.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public int Year { get; set; }
+        public List<Job> Jobs { get; set; }
     }
 }
