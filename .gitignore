@@ -32,3 +32,6 @@ msbuild.wrn
 
 # Visual Studio 2015
 .vs/
+.idea/.idea.VoyageAPI.dir/.idea/indexLayout.xml
+.idea/.idea.VoyageAPI.dir/.idea/projectSettingsUpdater.xml
+.idea/.idea.VoyageAPI.dir/.idea/workspace.xml
