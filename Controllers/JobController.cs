@@ -1,11 +1,8 @@
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using VoyageAPI.Adapter;
 using VoyageAPI.Context;
 using VoyageAPI.DTOs;
-using State = VoyageAPI.Models.State;
+using VoyageAPI.Logic;
 
 namespace VoyageAPI.Controllers
 {
@@ -14,18 +11,17 @@ namespace VoyageAPI.Controllers
     public class JobController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IJobLogic _jobLogic;
 
-        public JobController(ApplicationDbContext dataContext)
+        public JobController(IJobLogic jobLogic)
         {
-            _context = dataContext;
+            _jobLogic = jobLogic;
         }
 
         [HttpGet("{employeeId}/pending", Name = "GetPendingJobs")]
         public ActionResult<JobDTO> GetPendingJobs([FromRoute] int employeeId)
         {
-            List<JobDTO> result = JobAdapter.mapJobs(_context.Jobs.AsQueryable()
-                .Where(job => (job.Employee.Id == employeeId && job.State == State.Pending))
-                .Include(job => job.Product));;
+            List<JobDTO> result = _jobLogic.GetPendingJobs(employeeId);
             if (result == null)
             {
                 return NotFound("No Jobs pending.");
@@ -37,9 +33,7 @@ namespace VoyageAPI.Controllers
         [HttpGet("{employeeId}/inProcess", Name = "GetInProcessJobs")]
         public ActionResult<JobDTO> GetInProcessJobs([FromRoute] int employeeId)
         {
-            List<JobDTO> result = JobAdapter.mapJobs(_context.Jobs.AsQueryable()
-                .Where(job => (job.Employee.Id == employeeId && job.State == State.InProcess))
-                .Include(job => job.Product));
+            List<JobDTO> result = _jobLogic.GetInProcessJobs(employeeId);
             if (result == null)
             {
                 return NotFound("No Jobs in process.");
@@ -51,9 +45,7 @@ namespace VoyageAPI.Controllers
         [HttpGet("{employeeId}/finished", Name = "GetFinishedJobs")]
         public ActionResult<JobDTO> GetFinishedJobs([FromRoute] int employeeId)
         {
-            List<JobDTO> result = JobAdapter.mapJobs(_context.Jobs.AsQueryable()
-                .Where(job => (job.Employee.Id == employeeId && job.State == State.Finished))
-                .Include(job => job.Product));
+            List<JobDTO> result = _jobLogic.GetFinishedJobs(employeeId);
             if (result == null)
             {
                 return NotFound("No Jobs finished.");
