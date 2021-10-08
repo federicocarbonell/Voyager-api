@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VoyageAPI.Context;
+using VoyageAPI.Logic;
 
 namespace VoyageAPI
 {
@@ -32,6 +33,7 @@ namespace VoyageAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IEmployeeLogic, EmployeeLogic>();
             services.AddControllers();
             var connectionString = Configuration["ConnectionStrings:DbConnectionString"];
 

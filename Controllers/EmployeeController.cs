@@ -2,6 +2,7 @@
 using VoyageAPI.DTOs;
 using VoyageAPI.Context;
 using System.Linq;
+using VoyageAPI.Logic;
 
 namespace VoyageAPI.Controllers
 {
@@ -10,26 +11,23 @@ namespace VoyageAPI.Controllers
     public class EmployeeController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IEmployeeLogic _employeeLogic;
 
-        public EmployeeController(ApplicationDbContext dataContext)
+        public EmployeeController(ApplicationDbContext dataContext, IEmployeeLogic employeeLogic)
         {
             _context = dataContext;
+            _employeeLogic = employeeLogic;
         }
 
         [HttpPost()]
         public ActionResult<EmployeeDTO> Get([FromBody] EmployeeLogin employee)
         {
-            var emp = _context.Employees.FirstOrDefault(e => e.Email.Equals(employee.Email) && e.Password.Equals(employee.Password));
+            var emp = _employeeLogic.EmployeeLogin(employee.Email, employee.Password);
             if (emp == null)
             {
-                return NotFound("User does not exist.");
+                return NotFound();
             }
-            EmployeeDTO employeeDTO = new EmployeeDTO
-            {
-                Id = emp.Id,
-                Name = emp.Name
-            };
-            return Ok(employeeDTO);
+            return Ok(emp);
         }
         
     }
