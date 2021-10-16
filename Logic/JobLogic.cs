@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using VoyageAPI.Adapter;
 using VoyageAPI.Context;
 using VoyageAPI.DTOs;
+using VoyageAPI.Models;
 using State = VoyageAPI.Models.State;
 
 namespace VoyageAPI.Logic
@@ -37,6 +38,16 @@ namespace VoyageAPI.Logic
                 .Where(job => (job.Employee.Id == employeeId && job.State == State.Finished))
                 .Include(job => job.Product));
             return result;
+        }
+
+        public void UpdateStateJob(int employeeId, JobDTO job)
+        {
+            if(employeeId < 0) throw new System.IndexOutOfRangeException("Incorrect Id.");
+            Job resultJob = _context.Jobs.AsQueryable()
+                .Where(j => j.Id == employeeId).First();
+            if (resultJob == null) throw new System.IndexOutOfRangeException("There is no job with that id.");
+            resultJob.State = (State)job.State;
+            _context.SaveChanges();
         }
     }
 }

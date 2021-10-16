@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using VoyageAPI.Context;
@@ -52,6 +53,25 @@ namespace VoyageAPI.Controllers
             }
 
             return Ok(result);
+        }
+
+        [HttpPut("{jobId}")]
+        public ActionResult<JobDTO> ModifyStateJob([FromRoute] int jobId, [FromBody] JobDTO job)
+        {
+            try
+            {
+                if (job == null) return BadRequest("Must pass a task.");
+                _jobLogic.UpdateStateJob(jobId, job);
+                return Ok();
+            } 
+            catch (IndexOutOfRangeException ind)
+            {
+                return BadRequest(ind.Message);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e);
+            }
         }
     }
 }
