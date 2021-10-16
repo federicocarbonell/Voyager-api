@@ -8,5 +8,6 @@ namespace VoyageAPI.Logic
         public List<JobDTO> GetPendingJobs(int employeeId);
         public List<JobDTO> GetInProcessJobs(int employeeId);
         public List<JobDTO> GetFinishedJobs(int employeeId);
+        public void UpdateStateJob(int employeeId, JobDTO job);
     }
 }
