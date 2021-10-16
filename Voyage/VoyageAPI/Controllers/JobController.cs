@@ -56,7 +56,7 @@ namespace VoyageAPI.Controllers
         }
 
         [HttpPut("{jobId}")]
-        public ActionResult<JobDTO> ModifyStateJob([FromRoute] int jobId, [FromBody] JobDTO job)
+        public ActionResult ModifyStateJob([FromRoute] int jobId, [FromBody] JobDTO job)
         {
             try
             {
