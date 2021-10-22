@@ -3,7 +3,6 @@ using VoyageAPI.DTOs;
 using VoyageAPI.Context;
 using System.Linq;
 using VoyageAPI.Logic;
-using System;
 
 namespace VoyageAPI.Controllers
 {
@@ -11,29 +10,25 @@ namespace VoyageAPI.Controllers
     [Route("api/[controller]")]
     public class EmployeeController : Controller
     {
+        private readonly ApplicationDbContext _context;
         private readonly IEmployeeLogic _employeeLogic;
 
-        public EmployeeController(IEmployeeLogic employeeLogic)
+        public EmployeeController(ApplicationDbContext dataContext, IEmployeeLogic employeeLogic)
         {
+            _context = dataContext;
             _employeeLogic = employeeLogic;
         }
 
         [HttpPost()]
-        public ActionResult<EmployeeDTO> Login([FromBody] EmployeeLogin employee)
+        public ActionResult<EmployeeDTO> Get([FromBody] EmployeeLogin employee)
         {
-            try
+            var emp = _employeeLogic.EmployeeLogin(employee.Email, employee.Password);
+            if (emp == null)
             {
-                var emp = _employeeLogic.EmployeeLogin(employee.Email, employee.Password);
-                if (emp == null)
-                {
-                    return NotFound("Usuario no encontrado.");
-                }
-                return Ok(emp);
+                return NotFound();
             }
-            catch(Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }     
+            return Ok(emp);
+        }
+        
     }
 }

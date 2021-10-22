@@ -139,7 +139,6 @@ C:\Users\PC\Desktop\ISP\Voyage\VoyageTest\obj\Debug\netcoreapp3.1\VoyageTest.gen
 C:\Users\PC\Desktop\ISP\Bertolotti_Carbonell_Goni_API\Voyage\VoyageTest\obj\Debug\netcoreapp3.1\VoyageTest.csprojAssemblyReference.cache
 C:\Users\PC\Desktop\ISP\Bertolotti_Carbonell_Goni_API\Voyage\VoyageTest\obj\Debug\netcoreapp3.1\VoyageTest.AssemblyInfoInputs.cache
 C:\Users\PC\Desktop\ISP\Bertolotti_Carbonell_Goni_API\Voyage\VoyageTest\obj\Debug\netcoreapp3.1\VoyageTest.AssemblyInfo.cs
-C:\Users\PC\Desktop\ISP\Bertolotti_Carbonell_Goni_API\Voyage\VoyageTest\obj\Debug\netcoreapp3.1\VoyageTest.csproj.CoreCompileInputs.cache
 C:\Users\PC\Desktop\ISP\Bertolotti_Carbonell_Goni_API\Voyage\VoyageTest\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\PC\Desktop\ISP\Bertolotti_Carbonell_Goni_API\Voyage\VoyageTest\bin\Debug\netcoreapp3.1\appsettings.json
 C:\Users\PC\Desktop\ISP\Bertolotti_Carbonell_Goni_API\Voyage\VoyageTest\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
@@ -280,3 +279,5 @@ C:\Users\PC\Desktop\ISP\Bertolotti_Carbonell_Goni_API\Voyage\VoyageTest\bin\Debu
 C:\Users\PC\Desktop\ISP\Bertolotti_Carbonell_Goni_API\Voyage\VoyageTest\bin\Debug\netcoreapp3.1\Moq.dll
 C:\Users\PC\Desktop\ISP\Bertolotti_Carbonell_Goni_API\Voyage\VoyageTest\obj\Debug\netcoreapp3.1\VoyageTest.dll
 C:\Users\PC\Desktop\ISP\Bertolotti_Carbonell_Goni_API\Voyage\VoyageTest\obj\Debug\netcoreapp3.1\VoyageTest.pdb
+C:\Users\PC\Desktop\ISP\Bertolotti_Carbonell_Goni_API\Voyage\VoyageTest\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.InMemory.dll
+C:\Users\PC\Desktop\ISP\Bertolotti_Carbonell_Goni_API\Voyage\VoyageTest\obj\Debug\netcoreapp3.1\VoyageTest.csproj.CoreCompileInputs.cache

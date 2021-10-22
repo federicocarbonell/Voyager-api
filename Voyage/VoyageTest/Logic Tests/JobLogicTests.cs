@@ -237,5 +237,59 @@ namespace VoyageTest.LogicTests
             List<JobDTO> result = jobLogic.GetFinishedJobs(2);
             Assert.AreEqual(expectedResult.Count(), result.Count());
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException), "Incorrect Id.")]
+        public void ModifyStateJobFailId()
+        {
+            Job job = new Job()
+            {
+                Id = 1,
+                State = VoyageAPI.Models.State.Pending,
+                Description = "New job"
+            };
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                                .UseInMemoryDatabase(new Guid().ToString())
+                                .Options;
+            context = new ApplicationDbContext(options);
+            context.Jobs.Add(job);
+            context.SaveChanges();
+            IJobLogic jobLogic = new JobLogic(context);
+
+            JobDTO jobExpected = new JobDTO()
+            {
+                Id = 1,
+                State = VoyageAPI.DTOs.State.Pending,
+                Description = "New job"
+            };
+            jobLogic.UpdateStateJob(-1, jobExpected);
+        }
+
+        [TestMethod]
+        public void ModifyStateJobCorrect()
+        {
+            Job job = new Job()
+            {
+                Id = 1,
+                State = VoyageAPI.Models.State.Pending,
+                Description = "New job"
+            };
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                                .UseInMemoryDatabase(new Guid().ToString())
+                                .Options;
+            context = new ApplicationDbContext(options);
+            context.Jobs.Add(job);
+            context.SaveChanges();
+            IJobLogic jobLogic = new JobLogic(context);
+
+            JobDTO jobExpected = new JobDTO()
+            {
+                Id = 1,
+                State = VoyageAPI.DTOs.State.Finished,
+                Description = "New job"
+            };
+            jobLogic.UpdateStateJob(1, jobExpected);
+            Assert.AreEqual(context.Jobs.Find(1).State, VoyageAPI.Models.State.Finished);
+        }
     }
 }
