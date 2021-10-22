@@ -43,9 +43,10 @@ namespace VoyageAPI.Logic
         public void UpdateStateJob(int employeeId, JobDTO job)
         {
             if(employeeId < 0) throw new System.IndexOutOfRangeException("Incorrect Id.");
-            Job resultJob = _context.Jobs.AsQueryable()
-                .Where(j => j.Id == employeeId).First();
-            if (resultJob == null) throw new System.IndexOutOfRangeException("There is no job with that id.");
+            IQueryable<Job> jobsResulting = _context.Jobs.AsQueryable()
+                .Where(j => j.Id == employeeId);
+            if(jobsResulting.Count() == 0) throw new System.IndexOutOfRangeException("There is no job with that id.");
+            Job resultJob = jobsResulting.First();
             resultJob.State = (State)job.State;
             _context.SaveChanges();
         }
