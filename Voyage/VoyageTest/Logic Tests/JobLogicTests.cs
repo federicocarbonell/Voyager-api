@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using VoyageAPI.Context;
+using VoyageAPI.DTOs;
+using VoyageAPI.Logic;
 using VoyageAPI.Models;
 
 namespace VoyageTest.LogicTests
@@ -16,7 +17,15 @@ namespace VoyageTest.LogicTests
         private Product product;
         private Employee employee;
 
-        public void InitializeContext(State state)
+        private ApplicationDbContext context;
+
+        [TestCleanup]
+        public void CleanUp()
+        {
+            this.context.Database.EnsureDeleted();
+        }
+
+        public void InitializeContext(VoyageAPI.Models.State state)
         {
             employee = new Employee { Id = 1, Name = "Fede", Email = "Fede@fede.com", Jobs = jobsToReturn, Password = "fede" };
             product = new Product { Id = 1, Description = "Freezer", Name = "Panasonic", Year = 2020 };
@@ -48,12 +57,57 @@ namespace VoyageTest.LogicTests
         }
 
         [TestMethod]
-        public void GetPendingJobsTestOk()
+        [ExpectedException(typeof(IndexOutOfRangeException), "Incorrect Id.")]
+        public void ModifyStateJobFailId()
         {
-            InitializeContext(State.Pending);
-            Mock<ApplicationDbContext> mock = new Mock<ApplicationDbContext>(MockBehavior.Strict);
-            mock.Setup(m => m.Jobs.AsQueryable().Where(job => (job.Employee.Id == 1 && job.State == State.Pending))
-                .Include(job => job.Product)).Returns();
+            Job job = new Job()
+            {
+                Id = 1,
+                State = VoyageAPI.Models.State.Pending,
+                Description = "New job"
+            };
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                                .UseInMemoryDatabase(new Guid().ToString())
+                                .Options;
+            context = new ApplicationDbContext(options);
+            context.Jobs.Add(job);
+            context.SaveChanges();
+            IJobLogic jobLogic = new JobLogic(context);
+
+            JobDTO jobExpected = new JobDTO()
+            {
+                Id = 1,
+                State = VoyageAPI.DTOs.State.Pending,
+                Description = "New job"
+            };
+            jobLogic.UpdateStateJob(-1, jobExpected);
+        }
+
+        [TestMethod]
+        public void ModifyStateJobCorrect()
+        {
+            Job job = new Job()
+            {
+                Id = 1,
+                State = VoyageAPI.Models.State.Pending,
+                Description = "New job"
+            };
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                                .UseInMemoryDatabase(new Guid().ToString())
+                                .Options;
+            context = new ApplicationDbContext(options);
+            context.Jobs.Add(job);
+            context.SaveChanges();
+            IJobLogic jobLogic = new JobLogic(context);
+
+            JobDTO jobExpected = new JobDTO()
+            {
+                Id = 1,
+                State = VoyageAPI.DTOs.State.Finished,
+                Description = "New job"
+            };
+            jobLogic.UpdateStateJob(1, jobExpected);
+            Assert.AreEqual(context.Jobs.Find(1).State, VoyageAPI.Models.State.Finished);
         }
     }
 }
