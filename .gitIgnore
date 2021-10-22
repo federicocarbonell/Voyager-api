@@ -1,0 +1,49 @@
+# From .NET Core 3.0 you can use the command: `dotnet new gitignore` to generate a customizable .gitignore file
+
+Voyage/VoyageAPI/*.swp
+Voyage/VoyageAPI/*.*~
+Voyage/VoyageAPI/project.lock.json
+Voyage/VoyageAPI/.DS_Store
+Voyage/VoyageAPI/*.pyc
+
+# Visual Studio Code
+.vscode
+
+# User-specific files
+Voyage/VoyageAPI/*.suo
+Voyage/VoyageAPI/*.user
+Voyage/VoyageAPI/*.userosscache
+Voyage/VoyageAPI/*.sln.docstates
+
+# Build results
+Voyage/.vs
+Voyage/VoyageAPI/[Dd]ebug/*
+Voyage/VoyageAPI/[Dd]ebugPublic/*
+Voyage/VoyageAPI/[Rr]elease/*
+Voyage/VoyageAPI/[Rr]eleases/*
+Voyage/VoyageAPI/x64/*
+Voyage/VoyageAPI/x86/*
+Voyage/VoyageAPI/build/*
+Voyage/VoyageAPI/bld/*
+Voyage/VoyageAPI/[Bb]in/*
+Voyage/VoyageAPI/[Oo]bj/*
+Voyage/VoyageAPI/msbuild.log
+Voyage/VoyageAPI/msbuild.err
+Voyage/VoyageAPI/msbuild.wrn
+
+# Visual Studio 2015
+Voyage/VoyageAPI/.idea/*
+
+Voyage/VoyageTest/[Dd]ebug/*
+Voyage/VoyageTest/[Dd]ebugPublic/*
+Voyage/VoyageTest/[Rr]elease/*
+Voyage/VoyageTest/[Rr]eleases/*
+Voyage/VoyageTest/x64/*
+Voyage/VoyageTest/x86/*
+Voyage/VoyageTest/build/*
+Voyage/VoyageTest/bld/*
+Voyage/VoyageTest/[Bb]in/*
+Voyage/VoyageTest/[Oo]bj/*
+Voyage/VoyageTest/msbuild.log
+Voyage/VoyageTest/msbuild.err
+Voyage/VoyageTest/msbuild.wrn
