@@ -7,10 +7,11 @@ namespace VoyageAPI.Adapter
 {
     public class ReportAdapter
     {
-        public static List<ReportDTO> mapReport(List<Report> reports)
+        public static List<ReportDTO> mapReport(IQueryable<Report> reports)
         {
             List<ReportDTO> convertedReports = new List<ReportDTO>();
             List<string> convertedImagePath = new List<string>();
+            if (reports == null) return new List<ReportDTO>();
             foreach (Report report in reports)
             {
                 foreach(Image image in report.Images)

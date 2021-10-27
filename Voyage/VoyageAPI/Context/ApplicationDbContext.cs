@@ -1,8 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using VoyageAPI.Models;
 
 namespace VoyageAPI.Context
@@ -17,11 +13,13 @@ namespace VoyageAPI.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Report>().HasOne(r => r.Employee);
+            modelBuilder.Entity<Report>().HasOne(p => p.Product);
+            modelBuilder.Entity<Report>().HasMany(i => i.Images);
             modelBuilder.Entity<Job>().HasOne(r => r.Employee);
             modelBuilder.Entity<Job>().HasOne(r => r.Product);
             modelBuilder.Entity<Product>().HasMany(p => p.Jobs);
             modelBuilder.Entity<Employee>().HasMany(e => e.Jobs);
-            
+            modelBuilder.Entity<Employee>().HasMany(r => r.Reports);
         }
 
         public DbSet<Employee> Employees { get; set; }

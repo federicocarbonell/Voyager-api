@@ -31,7 +31,7 @@ namespace VoyageAPI.Controllers
             return Ok(product);
         }
 
-        [HttpGet("{productId}/reports", Name = "GetProductInfo")]
+        [HttpGet("{productId}/reports")]
         public ActionResult<ReportDTO> GetProductReport([FromRoute] int productId)
         {
             try

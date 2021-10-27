@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using VoyageAPI.Adapter;
@@ -18,14 +19,14 @@ namespace VoyageAPI.Logic
 
         public void AddReport(int productId, Report report)
         {
-            Product product = _context.Products.FirstOrDefault(p => p.Id == productId);
-            if (product == null) throw new IndexOutOfRangeException("Incorrect product ID.");
-            Employee employee = _context.Employees.FirstOrDefault(e => e.Id == report.Employee.Id);
-            if (employee == null) throw new IndexOutOfRangeException("Incorrect employee ID.");
+            report.Product = _context.Products.FirstOrDefault(p => p.Id == productId);
+            if (report.Product == null) throw new IndexOutOfRangeException("Incorrect product ID.");
+            report.Employee = _context.Employees.FirstOrDefault(e => e.Id == report.Employee.Id);
+            if (report.Employee == null) throw new IndexOutOfRangeException("Incorrect employee ID.");
             if (report.VisitDate == null) report.VisitDate = DateTime.Now;
             else
             {
-                if (report.VisitDate < DateTime.Now) throw new ArgumentException("The visit date cannot be greater than today.");
+                if (report.VisitDate > DateTime.Now) throw new ArgumentException("The visit date cannot be greater than today.");
             }
             if (report.TimeArrival == null) report.TimeArrival = DateTime.Now;
             if (report.TimeResolution == null) report.TimeResolution = DateTime.Now;
@@ -41,7 +42,11 @@ namespace VoyageAPI.Logic
                 }
             }
             else throw new ArgumentException("The report must contain at least one image.");
-            _context.Reports.Add(report);
+
+            _context.Add(report);
+            if (report.Product.Reports == null) report.Product.Reports = new List<Report>();
+            report.Product.Reports.Add(report);
+            _context.SaveChanges();
         }
 
         public ProductDTO GetProductInfo(int productId)
@@ -63,9 +68,11 @@ namespace VoyageAPI.Logic
 
         public ICollection<ReportDTO> GetReport(int productId)
         {
-            List<ReportDTO> result = ReportAdapter.mapReport(_context.Products.AsQueryable()
-                .Where(product => product.Id == productId)
-                .FirstOrDefault().Reports);
+            List<ReportDTO> result = ReportAdapter.mapReport(_context.Reports.AsQueryable()
+                .Where(report => report.Product.Id == productId)
+                .Include(report => report.Product)
+                .Include(report => report.Images)
+                .Include(report => report.Employee));
             return result;
         }
     }
