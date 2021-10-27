@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using VoyageAPI.Adapter;
 using VoyageAPI.Context;
 using VoyageAPI.DTOs;
 using VoyageAPI.Models;
@@ -29,6 +31,14 @@ namespace VoyageAPI.Logic
                 Year = product.Year
             };
             return productDTO;
+        }
+
+        public ICollection<ReportDTO> GetReport(int productId)
+        {
+            List<ReportDTO> result = ReportAdapter.mapReport(_context.Products.AsQueryable()
+                .Where(product => product.Id == productId)
+                .FirstOrDefault().Reports);
+            return result;
         }
     }
 }
