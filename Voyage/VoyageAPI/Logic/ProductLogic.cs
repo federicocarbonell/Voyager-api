@@ -73,6 +73,7 @@ namespace VoyageAPI.Logic
                 .Include(report => report.Product)
                 .Include(report => report.Images)
                 .Include(report => report.Employee));
+            if (result.Count == 0) return new List<ReportDTO>();
             return result;
         }
     }
