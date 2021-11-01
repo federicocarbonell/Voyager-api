@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace VoyageAPI.Models
 {
@@ -10,13 +8,15 @@ namespace VoyageAPI.Models
     public class Report
     {
         public int Id { get; set; }
-        public string ArriveTime { get; set; }
-        public string LeaveTime { get; set; }
+        public Product Product { get; set; }
+        public DateTime VisitDate { get; set; }
+        public DateTime TimeArrival { get; set; }
+        public DateTime TimeResolution { get; set; }
         public Employee Employee { get; set; }
-        public string Details { get; set; }
         public string Summary { get; set; }
-        public string Comments { get; set; }
-        public string Image { get; set; }
+        public string Detail { get; set; }
+        public string Comment { get; set; }
+        public List<Image> Images { get; set; }
 
     }
 }
