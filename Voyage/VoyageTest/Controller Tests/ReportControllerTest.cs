@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using VoyageAPI.Controllers;
 using VoyageAPI.DTOs;
 using VoyageAPI.Logic;
@@ -61,7 +59,7 @@ namespace VoyageTest.Controller_Tests
             var result = controller.GetProductReport(1);
             OkObjectResult okResult = result.Result as OkObjectResult;
             ICollection<ReportDTO> resultReports = okResult.Value as ICollection<ReportDTO>;
-            
+
             mockReport.VerifyAll();
             mockProduct.VerifyAll();
             foreach (ReportDTO report in resultReports)
@@ -111,6 +109,42 @@ namespace VoyageTest.Controller_Tests
             mockProduct.VerifyAll();
             Assert.AreEqual("No Product found.", notFoundResult.Value);
             Assert.AreEqual(404, notFoundResult.StatusCode);
+        }
+
+        [TestMethod]
+        public void TestCreateReportOk()
+        {
+            ICollection<string> images = new List<string>();
+            images.Add("Imagen1");
+            images.Add("Imagen2");
+
+            ProductDTO productToReturn = new ProductDTO
+            {
+                Id = 1,
+                Name = "Panasonic 5000",
+                Description = "Heladera panasonic",
+                Year = 2021
+            };
+            ReportDTO report1 = new ReportDTO
+            {
+                Id = 1,
+                ProductName = "Heladera Samsung",
+                VisitDate = "27/oct/2021",
+                EmployeeName = "José Pablo",
+                Summary = "Se arreglo la heladera",
+                Detail = "Le faltaba gas",
+                Comment = "Tener cuidado al abrir que esta llena",
+                Images = images
+            };
+
+            Mock<IReportLogic> mockReport = new Mock<IReportLogic>(MockBehavior.Strict);
+            Mock<IProductLogic> mockProduct = new Mock<IProductLogic>(MockBehavior.Strict);
+            mockProduct.Setup(m => m.GetProductInfo(1)).Returns(productToReturn);
+
+            ReportController controller = new ReportController(mockReport.Object, mockProduct.Object);
+            var result = controller.GetProductReport(1);
+            OkObjectResult okResult = result.Result as OkObjectResult;
+
         }
     }
 }
