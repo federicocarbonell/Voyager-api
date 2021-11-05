@@ -20,7 +20,7 @@ namespace VoyageAPI.Controllers
             _productLogic = productLogic;
         }
 
-        [HttpGet("{productId}/report")]
+        [HttpGet("{productId}")]
         public ActionResult<ReportDTO> GetProductReport([FromRoute] int productId)
         {
             try
@@ -44,7 +44,7 @@ namespace VoyageAPI.Controllers
 
         }
 
-        [HttpPost("{productId}/report")]
+        [HttpPost("{productId}")]
         public ActionResult PostReport([FromRoute] int productId, [FromBody] Report report)
         {
             try

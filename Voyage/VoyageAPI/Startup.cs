@@ -36,6 +36,7 @@ namespace VoyageAPI
             services.AddScoped<IEmployeeLogic, EmployeeLogic>();
             services.AddScoped<IJobLogic, JobLogic>();
             services.AddScoped<IProductLogic, ProductLogic>();
+            services.AddScoped<IReportLogic, ReportLogic>();
             services.AddControllers();
             var connectionString = Configuration["ConnectionStrings:DbConnectionString"];
 

@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System;
 using System.Collections.Generic;
 using VoyageAPI.Controllers;
 using VoyageAPI.DTOs;
 using VoyageAPI.Logic;
+using VoyageAPI.Models;
 
 namespace VoyageTest.Controller_Tests
 {
@@ -114,9 +116,9 @@ namespace VoyageTest.Controller_Tests
         [TestMethod]
         public void TestCreateReportOk()
         {
-            ICollection<string> images = new List<string>();
-            images.Add("Imagen1");
-            images.Add("Imagen2");
+            List<Image> images = new List<Image>();
+            images.Add(new Image { Id = 1, Path = "Imagen1"});
+            images.Add(new Image { Id = 2, Path = "Imagen2" });
 
             ProductDTO productToReturn = new ProductDTO
             {
@@ -125,12 +127,18 @@ namespace VoyageTest.Controller_Tests
                 Description = "Heladera panasonic",
                 Year = 2021
             };
-            ReportDTO report1 = new ReportDTO
+            Report report1 = new Report
             {
                 Id = 1,
-                ProductName = "Heladera Samsung",
-                VisitDate = "27/oct/2021",
-                EmployeeName = "José Pablo",
+                Product = {  
+                    Id = 1,
+                    Name = "Panasonic 5000",
+                    Description = "Heladera panasonic",
+                    Year = 2021
+                },
+                VisitDate = DateTime.Now,
+                TimeArrival = DateTime.Now,
+                TimeResolution = DateTime.Now,
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
@@ -142,9 +150,16 @@ namespace VoyageTest.Controller_Tests
             mockProduct.Setup(m => m.GetProductInfo(1)).Returns(productToReturn);
 
             ReportController controller = new ReportController(mockReport.Object, mockProduct.Object);
-            var result = controller.GetProductReport(1);
+            var result = controller.PostReport(1,report1);
+            /*
             OkObjectResult okResult = result.Result as OkObjectResult;
 
+            mockReport.VerifyAll();
+            mockProduct.VerifyAll();
+
+            Assert.AreEqual("Ok result.", okResult.Value);
+            Assert.AreEqual(201, okResult.StatusCode);
+            */
         }
     }
 }
