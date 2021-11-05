@@ -28,8 +28,7 @@ namespace VoyageAPI.Adapter
                     State = (State) job.State,
                     Description = job.Description,
                     Time = job.Time,
-                    Latitude = job.Latitude,
-                    Longitude = job.Longitude,
+                    Direction = job.Direction
                 };
                 convertedJobs.Add(dto);
             }
