@@ -17,7 +17,7 @@ namespace VoyageAPI.Logic
             _context = context;
         }
 
-        public void AddReport(int productId, Report report)
+        public ReportDTO AddReport(int productId, Report report)
         {
             report.Product = _context.Products.FirstOrDefault(p => p.Id == productId);
             if (report.Product == null) throw new IndexOutOfRangeException("Incorrect product ID.");
@@ -47,6 +47,22 @@ namespace VoyageAPI.Logic
             if (report.Product.Reports == null) report.Product.Reports = new List<Report>();
             report.Product.Reports.Add(report);
             _context.SaveChanges();
+            List<string> convertedImagePath = new List<string>();
+            foreach (Image image in report.Images)
+            {
+                convertedImagePath.Add(image.Path);
+            }
+            return new ReportDTO
+            {
+                Id = report.Id,
+                ProductName = report.Product.Name,
+                VisitDate = report.VisitDate.Day + "/" + report.VisitDate.Month + "/" + report.VisitDate.Year,
+                EmployeeName = report.Employee.Name,
+                Summary = report.Summary,
+                Detail = report.Detail,
+                Comment = report.Comment,
+                Images = convertedImagePath
+            };
         }
 
         public ICollection<ReportDTO> GetReport(int productId)

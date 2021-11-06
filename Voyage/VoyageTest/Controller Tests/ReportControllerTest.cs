@@ -120,22 +120,14 @@ namespace VoyageTest.Controller_Tests
             images.Add(new Image { Id = 1, Path = "Imagen1"});
             images.Add(new Image { Id = 2, Path = "Imagen2" });
 
-            ProductDTO productToReturn = new ProductDTO
+            ICollection<string> imagesDTO = new List<string>();
+            imagesDTO.Add("Imagen1");
+            imagesDTO.Add("Imagen2");
+
+            Report report = new Report
             {
                 Id = 1,
-                Name = "Panasonic 5000",
-                Description = "Heladera panasonic",
-                Year = 2021
-            };
-            Report report1 = new Report
-            {
-                Id = 1,
-                Product = {  
-                    Id = 1,
-                    Name = "Panasonic 5000",
-                    Description = "Heladera panasonic",
-                    Year = 2021
-                },
+                Product = new Product { Id = 1 },
                 VisitDate = DateTime.Now,
                 TimeArrival = DateTime.Now,
                 TimeResolution = DateTime.Now,
@@ -145,21 +137,37 @@ namespace VoyageTest.Controller_Tests
                 Images = images
             };
 
-            Mock<IReportLogic> mockReport = new Mock<IReportLogic>(MockBehavior.Strict);
+            ReportDTO reportDTO = new ReportDTO
+            {
+                Id = 1,
+                ProductName = "Heladera Samsung",
+                VisitDate = DateTime.Now.ToString(),
+                EmployeeName = "José Pablo",
+                Summary = "Se arreglo la heladera",
+                Detail = "Le faltaba gas",
+                Comment = "Tener cuidado al abrir que esta llena",
+                Images = imagesDTO
+            };
+
+            ProductDTO productToReturn = new ProductDTO
+            {
+                Id = 1,
+                Name = "Panasonic 5000",
+                Description = "Heladera panasonic",
+                Year = 2021
+            };
             Mock<IProductLogic> mockProduct = new Mock<IProductLogic>(MockBehavior.Strict);
-            mockProduct.Setup(m => m.GetProductInfo(1)).Returns(productToReturn);
+            Mock<IReportLogic> mockReport = new Mock<IReportLogic>(MockBehavior.Strict);
+            mockReport.Setup(m => m.AddReport(1,report)).Returns(reportDTO);
 
             ReportController controller = new ReportController(mockReport.Object, mockProduct.Object);
-            var result = controller.PostReport(1,report1);
-            /*
+            var result = controller.PostReport(1, report);
             OkObjectResult okResult = result.Result as OkObjectResult;
 
             mockReport.VerifyAll();
-            mockProduct.VerifyAll();
 
-            Assert.AreEqual("Ok result.", okResult.Value);
-            Assert.AreEqual(201, okResult.StatusCode);
-            */
+            Assert.AreEqual(reportDTO, okResult.Value);
+            Assert.AreEqual(200, okResult.StatusCode);
         }
     }
 }

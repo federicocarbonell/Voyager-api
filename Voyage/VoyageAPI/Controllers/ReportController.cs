@@ -45,12 +45,12 @@ namespace VoyageAPI.Controllers
         }
 
         [HttpPost("{productId}")]
-        public ActionResult PostReport([FromRoute] int productId, [FromBody] Report report)
+        public ActionResult<ReportDTO> PostReport([FromRoute] int productId, [FromBody] Report report)
         {
             try
             {
-                _reportLogic.AddReport(productId, report);
-                return Ok();
+                ReportDTO reportReturn = _reportLogic.AddReport(productId, report);
+                return Ok(reportReturn);
             }
             catch (IndexOutOfRangeException ind)
             {

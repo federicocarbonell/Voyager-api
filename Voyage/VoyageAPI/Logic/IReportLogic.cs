@@ -10,6 +10,6 @@ namespace VoyageAPI.Logic
     public interface IReportLogic
     {
         ICollection<ReportDTO> GetReport(int productId);
-        void AddReport(int productId, Report report);
+        ReportDTO AddReport(int productId, Report report);
     }
 }
