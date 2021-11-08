@@ -78,12 +78,19 @@ namespace VoyageAPI.Logic
 
         public ReportDTO GetReportDetail(int productId, int reportId)
         {
-            Report report = _context.Reports.FirstOrDefault(r => r.Id == reportId);
+            Report report = _context.Reports
+                .Include(report => report.Product)
+                .Include(report => report.Images)
+                .Include(report => report.Employee)
+                .FirstOrDefault(r => r.Id == reportId);
             if (report == null) throw new IndexOutOfRangeException("Incorrect report ID.");
             List<string> convertedImagePath = new List<string>();
-            foreach (Image image in report.Images)
+            if(report.Images != null)
             {
-                convertedImagePath.Add(image.Path);
+                foreach (Image image in report.Images)
+                {
+                    convertedImagePath.Add(image.Path);
+                }
             }
             return new ReportDTO
             {

@@ -42,7 +42,7 @@ namespace VoyageAPI.Controllers
             }
         }
 
-        [HttpGet("{productId}")]
+        [HttpGet("{reportId}/product/{productId}")]
         public ActionResult<ReportDTO> GetProductReportDetail([FromRoute] int productId, [FromRoute] int reportId)
         {
             try
