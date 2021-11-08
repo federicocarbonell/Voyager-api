@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using VoyageAPI.DTOs;
+using VoyageAPI.Filter;
 using VoyageAPI.Logic;
 using VoyageAPI.Models;
 
@@ -20,6 +21,7 @@ namespace VoyageAPI.Controllers
             _productLogic = productLogic;
         }
 
+        [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpGet("{productId}")]
         public ActionResult<ReportDTO> GetProductReport([FromRoute] int productId)
         {
@@ -42,6 +44,7 @@ namespace VoyageAPI.Controllers
             }
         }
 
+        [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpGet("{reportId}/product/{productId}")]
         public ActionResult<ReportDTO> GetProductReportDetail([FromRoute] int productId, [FromRoute] int reportId)
         {
@@ -68,6 +71,7 @@ namespace VoyageAPI.Controllers
             }
         }
 
+        [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpPost("{productId}")]
         public ActionResult<ReportDTO> PostReport([FromRoute] int productId, [FromBody] Report report)
         {

@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VoyageAPI.Context;
+using VoyageAPI.Filter;
 using VoyageAPI.Logic;
 
 namespace VoyageAPI
@@ -37,6 +38,8 @@ namespace VoyageAPI
             services.AddScoped<IJobLogic, JobLogic>();
             services.AddScoped<IProductLogic, ProductLogic>();
             services.AddScoped<IReportLogic, ReportLogic>();
+            services.AddScoped<AuthorizationFilter>();
+
             services.AddControllers();
             var connectionString = Configuration["ConnectionStrings:DbConnectionString"];
 

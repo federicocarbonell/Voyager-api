@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using VoyageAPI.Context;
 using VoyageAPI.DTOs;
+using VoyageAPI.Filter;
 using VoyageAPI.Logic;
 
 namespace VoyageAPI.Controllers
@@ -19,6 +20,7 @@ namespace VoyageAPI.Controllers
             _jobLogic = jobLogic;
         }
 
+        [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpGet("{employeeId}/pending", Name = "GetPendingJobs")]
         public ActionResult<JobDTO> GetPendingJobs([FromRoute] int employeeId)
         {
@@ -30,7 +32,8 @@ namespace VoyageAPI.Controllers
 
             return Ok(result);
         }
-        
+
+        [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpGet("{employeeId}/inProcess", Name = "GetInProcessJobs")]
         public ActionResult<JobDTO> GetInProcessJobs([FromRoute] int employeeId)
         {
@@ -42,7 +45,8 @@ namespace VoyageAPI.Controllers
 
             return Ok(result);
         }
-        
+
+        [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpGet("{employeeId}/finished", Name = "GetFinishedJobs")]
         public ActionResult<JobDTO> GetFinishedJobs([FromRoute] int employeeId)
         {
@@ -55,6 +59,7 @@ namespace VoyageAPI.Controllers
             return Ok(result);
         }
 
+        [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpPut("{jobId}")]
         public ActionResult ModifyStateJob([FromRoute] int jobId, [FromBody] JobDTO job)
         {

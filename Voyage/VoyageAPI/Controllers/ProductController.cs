@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using VoyageAPI.DTOs;
+using VoyageAPI.Filter;
 using VoyageAPI.Logic;
 using VoyageAPI.Models;
 
@@ -18,6 +19,7 @@ namespace VoyageAPI.Controllers
             _productLogic = productLogic;
         }
 
+        [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpGet("{productId}", Name = "GetProductInfo")]
         public ActionResult<ProductDTO> GetProductInfo([FromRoute] int productId)
         {
