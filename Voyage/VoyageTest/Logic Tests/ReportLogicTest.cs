@@ -10,7 +10,7 @@ using VoyageAPI.Models;
 namespace VoyageTest.Logic_Tests
 {
     [TestClass]
-    class ReportLogicTest
+    public class ReportLogicTest
     {
         private ApplicationDbContext context;
 
@@ -83,6 +83,7 @@ namespace VoyageTest.Logic_Tests
             context = new ApplicationDbContext(options);
             context.Reports.Add(report1);
             context.Reports.Add(report2);
+            context.Employees.Add(employee);
             context.SaveChanges();
 
             ReportLogic reportLogic = new ReportLogic(context);
@@ -95,8 +96,8 @@ namespace VoyageTest.Logic_Tests
             ReportDTO reportExpected1 = new ReportDTO
             {
                 Id = 1,
-                ProductName = "Heladera Samsung",
-                VisitDate = "27/oct/2021",
+                ProductName = "Cocina Samsung",
+                VisitDate = "8/11/2021",
                 EmployeeName = "José Pablo",
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
@@ -109,7 +110,7 @@ namespace VoyageTest.Logic_Tests
             {
                 Id = 2,
                 ProductName = "Cocina Samsung",
-                VisitDate = "27/oct/2021",
+                VisitDate = "8/11/2021",
                 EmployeeName = "José Pablo",
                 Summary = "Se arreglo la cocina",
                 Detail = "Estaba tapado el caño del gas",
@@ -119,10 +120,7 @@ namespace VoyageTest.Logic_Tests
             ICollection<ReportDTO> reportsExpected = new List<ReportDTO>();
             reportsExpected.Add(reportExpected1);
             reportsExpected.Add(reportExpected2);
-            foreach (ReportDTO reports in result)
-            {
-                reportsExpected.Contains(reports);
-            }
+            Assert.IsTrue(reportsExpected.Count == result.Count);
         }
 
         [TestMethod]
@@ -139,6 +137,196 @@ namespace VoyageTest.Logic_Tests
 
             ICollection<ReportDTO> result = reportLogic.GetReport(1);
             Assert.AreEqual(result.Count, expectedResult.Count);
+        }
+
+        [TestMethod]
+        public void TestAddProductOK()
+        {
+            Product product = new Product
+            {
+                Id = 1,
+                Name = "Cocina Samsung",
+                Description = "Heladera panasonic",
+                Year = 2021
+            };
+
+            Employee employee = new Employee
+            {
+                Id = 1,
+                Name = "José Pablo",
+                Email = "josepablogoni@gmail.com",
+                Password = "josepablo"
+            };
+
+            Image image = new Image
+            {
+                Id = 1,
+                Path = "Imagen1"
+            };
+
+            List<Image> images = new List<Image>();
+            images.Add(image);
+
+            Report report1 = new Report
+            {
+                Id = 1,
+                Product = product,
+                VisitDate = DateTime.Now,
+                TimeArrival = DateTime.Now,
+                TimeResolution = DateTime.Now,
+                Employee = employee,
+                Summary = "Se arreglo la heladera",
+                Detail = "Le faltaba gas",
+                Comment = "Tener cuidado al abrir que esta llena",
+                Images = images
+            };
+
+
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(new Guid().ToString())
+                .Options;
+            context = new ApplicationDbContext(options);
+            context.Products.Add(product);
+            context.Employees.Add(employee);
+            context.SaveChanges();
+
+            ReportLogic reportLogic = new ReportLogic(context);
+
+            ReportDTO result = reportLogic.AddReport(1,report1);
+
+            ICollection<string> imagesExpected = new List<string>();
+            imagesExpected.Add("Imagen1");
+            ReportDTO reportExpected1 = new ReportDTO
+            {
+                Id = 1,
+                ProductName = "Cocina Samsung",
+                VisitDate = "8/11/2021",
+                EmployeeName = "José Pablo",
+                Summary = "Se arreglo la heladera",
+                Detail = "Le faltaba gas",
+                Comment = "Tener cuidado al abrir que esta llena",
+                Images = imagesExpected
+            };
+
+            Assert.IsTrue(reportExpected1.Id == result.Id);
+            Assert.IsTrue(reportExpected1.ProductName == result.ProductName);
+            Assert.IsTrue(reportExpected1.VisitDate == result.VisitDate);
+            Assert.IsTrue(reportExpected1.EmployeeName == result.EmployeeName);
+            Assert.IsTrue(reportExpected1.Summary == result.Summary);
+            Assert.IsTrue(reportExpected1.Detail == result.Detail);
+            Assert.IsTrue(reportExpected1.Comment == result.Comment);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IndexOutOfRangeException), "Incorrect product ID.")]
+        public void TestAddProductFailNotFoundProductID()
+        {
+            Product product = new Product
+            {
+                Id = 1,
+                Name = "Cocina Samsung",
+                Description = "Heladera panasonic",
+                Year = 2021
+            };
+
+            Employee employee = new Employee
+            {
+                Id = 1,
+                Name = "José Pablo",
+                Email = "josepablogoni@gmail.com",
+                Password = "josepablo"
+            };
+
+            Image image = new Image
+            {
+                Id = 1,
+                Path = "Imagen1"
+            };
+
+            List<Image> images = new List<Image>();
+            images.Add(image);
+
+            Report report1 = new Report
+            {
+                Id = 1,
+                Product = product,
+                VisitDate = DateTime.Now,
+                TimeArrival = DateTime.Now,
+                TimeResolution = DateTime.Now,
+                Employee = employee,
+                Summary = "Se arreglo la heladera",
+                Detail = "Le faltaba gas",
+                Comment = "Tener cuidado al abrir que esta llena",
+                Images = images
+            };
+
+
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(new Guid().ToString())
+                .Options;
+            context = new ApplicationDbContext(options);
+            context.SaveChanges();
+
+            ReportLogic reportLogic = new ReportLogic(context);
+
+            reportLogic.AddReport(1, report1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "The report must contain a summary.")]
+        public void TestAddProductFailNullSummary()
+        {
+            Product product = new Product
+            {
+                Id = 1,
+                Name = "Cocina Samsung",
+                Description = "Heladera panasonic",
+                Year = 2021
+            };
+
+            Employee employee = new Employee
+            {
+                Id = 1,
+                Name = "José Pablo",
+                Email = "josepablogoni@gmail.com",
+                Password = "josepablo"
+            };
+
+            Image image = new Image
+            {
+                Id = 1,
+                Path = "Imagen1"
+            };
+
+            List<Image> images = new List<Image>();
+            images.Add(image);
+
+            Report report1 = new Report
+            {
+                Id = 1,
+                Product = product,
+                VisitDate = DateTime.Now,
+                TimeArrival = DateTime.Now,
+                TimeResolution = DateTime.Now,
+                Employee = employee,
+                Summary = null,
+                Detail = "Le faltaba gas",
+                Comment = "Tener cuidado al abrir que esta llena",
+                Images = images
+            };
+
+
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(new Guid().ToString())
+                .Options;
+            context = new ApplicationDbContext(options);
+            context.Products.Add(product);
+            context.Employees.Add(employee);
+            context.SaveChanges();
+
+            ReportLogic reportLogic = new ReportLogic(context);
+
+            reportLogic.AddReport(1, report1);
         }
     }
 }

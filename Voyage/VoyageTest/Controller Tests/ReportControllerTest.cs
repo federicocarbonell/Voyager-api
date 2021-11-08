@@ -169,5 +169,75 @@ namespace VoyageTest.Controller_Tests
             Assert.AreEqual(reportDTO, okResult.Value);
             Assert.AreEqual(200, okResult.StatusCode);
         }
+
+        [TestMethod]
+        public void TestCrearteProductReportsNotFoundProductId()
+        {
+            List<Image> images = new List<Image>();
+            images.Add(new Image { Id = 1, Path = "Imagen1" });
+            images.Add(new Image { Id = 2, Path = "Imagen2" });
+
+            Report report = new Report
+            {
+                Id = 1,
+                Product = new Product { Id = 1 },
+                VisitDate = DateTime.Now,
+                TimeArrival = DateTime.Now,
+                TimeResolution = DateTime.Now,
+                Summary = "Se arreglo la heladera",
+                Detail = "Le faltaba gas",
+                Comment = "Tener cuidado al abrir que esta llena",
+                Images = images
+            };
+
+            Mock<IReportLogic> mockReport = new Mock<IReportLogic>(MockBehavior.Strict);
+            Mock<IProductLogic> mockProduct = new Mock<IProductLogic>(MockBehavior.Strict);
+
+            mockReport.Setup(m => m.AddReport(1, report)).Throws(new IndexOutOfRangeException("Incorrect product ID."));
+
+            ReportController controller = new ReportController(mockReport.Object, mockProduct.Object);
+            var result = controller.PostReport(1, report);
+            ObjectResult resultObject = result.Result as ObjectResult;
+
+            mockReport.VerifyAll();
+            mockProduct.VerifyAll();
+            Assert.AreEqual("Incorrect product ID.", resultObject.Value);
+            Assert.AreEqual(400, resultObject.StatusCode);
+        }
+
+        [TestMethod]
+        public void TestCrearteProductReportsArgumentException()
+        {
+            List<Image> images = new List<Image>();
+            images.Add(new Image { Id = 1, Path = "Imagen1" });
+            images.Add(new Image { Id = 2, Path = "Imagen2" });
+
+            Report report = new Report
+            {
+                Id = 1,
+                Product = new Product { Id = 1 },
+                VisitDate = DateTime.Now,
+                TimeArrival = DateTime.Now,
+                TimeResolution = DateTime.Now,
+                Summary = "Se arreglo la heladera",
+                Detail = "Le faltaba gas",
+                Comment = "Tener cuidado al abrir que esta llena",
+                Images = images
+            };
+
+            Mock<IReportLogic> mockReport = new Mock<IReportLogic>(MockBehavior.Strict);
+            Mock<IProductLogic> mockProduct = new Mock<IProductLogic>(MockBehavior.Strict);
+
+            mockReport.Setup(m => m.AddReport(1, report)).Throws(new ArgumentException("The report must contain a summary."));
+
+            ReportController controller = new ReportController(mockReport.Object, mockProduct.Object);
+            var result = controller.PostReport(1, report);
+            ObjectResult resultObject = result.Result as ObjectResult;
+
+            mockReport.VerifyAll();
+            mockProduct.VerifyAll();
+            Assert.AreEqual("The report must contain a summary.", resultObject.Value);
+            Assert.AreEqual(400, resultObject.StatusCode);
+        }
     }
 }
