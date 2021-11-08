@@ -16,7 +16,7 @@ namespace VoyageAPI.Filter
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             string token = context.HttpContext.Request.Headers["Authorization"];
-            if (token == null)
+            if (token == null || token == "")
             {
                 context.Result = new ContentResult()
                 {
