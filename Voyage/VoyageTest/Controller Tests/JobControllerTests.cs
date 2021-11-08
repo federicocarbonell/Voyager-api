@@ -26,8 +26,7 @@ namespace VoyageTest
                 {
                     Id = 1,
                     Description = "Test",
-                    Latitude = "1",
-                    Longitude = "1",
+                    Direction = "My home",
                     Product = product,
                     State = state,
                     Time = "15:00",
@@ -36,8 +35,7 @@ namespace VoyageTest
                 {
                     Id = 2,
                     Description = "Test 2",
-                    Latitude = "2",
-                    Longitude = "2",
+                    Direction = "My home",
                     Product = product,
                     State = state,
                     Time = "16:00"
@@ -61,7 +59,7 @@ namespace VoyageTest
             mock.VerifyAll();
             Assert.AreEqual(jobs.First().Id, jobsToReturn.First().Id);
             Assert.AreEqual(jobs.First().Description, jobsToReturn.First().Description);
-            Assert.AreEqual(jobs.First().Latitude, jobsToReturn.First().Longitude);
+            Assert.AreEqual(jobs.First().Direction, jobsToReturn.First().Direction);
             Assert.AreEqual(jobs.First().Product.Id, jobsToReturn.First().Product.Id);
             Assert.AreEqual(jobs.First().State, jobsToReturn.First().State);
             Assert.AreEqual(jobs.First().Time, jobsToReturn.First().Time);
@@ -100,7 +98,7 @@ namespace VoyageTest
             mock.VerifyAll();
             Assert.AreEqual(jobs.First().Id, jobsToReturn.First().Id);
             Assert.AreEqual(jobs.First().Description, jobsToReturn.First().Description);
-            Assert.AreEqual(jobs.First().Latitude, jobsToReturn.First().Longitude);
+            Assert.AreEqual(jobs.First().Direction, jobsToReturn.First().Direction);
             Assert.AreEqual(jobs.First().Product.Id, jobsToReturn.First().Product.Id);
             Assert.AreEqual(jobs.First().State, jobsToReturn.First().State);
             Assert.AreEqual(jobs.First().Time, jobsToReturn.First().Time);
@@ -139,7 +137,7 @@ namespace VoyageTest
             mock.VerifyAll();
             Assert.AreEqual(jobs.First().Id, jobsToReturn.First().Id);
             Assert.AreEqual(jobs.First().Description, jobsToReturn.First().Description);
-            Assert.AreEqual(jobs.First().Latitude, jobsToReturn.First().Longitude);
+            Assert.AreEqual(jobs.First().Direction, jobsToReturn.First().Direction);
             Assert.AreEqual(jobs.First().Product.Id, jobsToReturn.First().Product.Id);
             Assert.AreEqual(jobs.First().State, jobsToReturn.First().State);
             Assert.AreEqual(jobs.First().Time, jobsToReturn.First().Time);
