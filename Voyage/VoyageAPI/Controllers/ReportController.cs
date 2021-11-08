@@ -40,8 +40,32 @@ namespace VoyageAPI.Controllers
             {
                 return StatusCode(500, e.Message);
             }
+        }
 
-
+        [HttpGet("{productId}")]
+        public ActionResult<ReportDTO> GetProductReportDetail([FromRoute] int productId, [FromRoute] int reportId)
+        {
+            try
+            {
+                ProductDTO product = _productLogic.GetProductInfo(productId);
+                if (product == null)
+                {
+                    return NotFound("No Product found.");
+                }
+                else
+                {
+                    ReportDTO report = _reportLogic.GetReportDetail(productId, reportId);
+                    return Ok(report);
+                }
+            }
+            catch (IndexOutOfRangeException ind)
+            {
+                return BadRequest(ind.Message);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
 
         [HttpPost("{productId}")]

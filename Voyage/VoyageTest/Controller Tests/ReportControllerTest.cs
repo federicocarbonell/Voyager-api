@@ -239,5 +239,61 @@ namespace VoyageTest.Controller_Tests
             Assert.AreEqual("The report must contain a summary.", resultObject.Value);
             Assert.AreEqual(400, resultObject.StatusCode);
         }
+
+        [TestMethod]
+        public void TestGetProductReportDetailOk()
+        {
+            ICollection<string> images = new List<string>();
+            images.Add("Imagen1");
+            images.Add("Imagen2");
+            ReportDTO report1 = new ReportDTO
+            {
+                Id = 1,
+                ProductName = "Heladera Samsung",
+                VisitDate = "27/oct/2021",
+                EmployeeName = "José Pablo",
+                Summary = "Se arreglo la heladera",
+                Detail = "Le faltaba gas",
+                Comment = "Tener cuidado al abrir que esta llena",
+                Images = images
+            };
+
+            Mock<IReportLogic> mockReport = new Mock<IReportLogic>(MockBehavior.Strict);
+            Mock<IProductLogic> mockProduct = new Mock<IProductLogic>(MockBehavior.Strict);
+            mockReport.Setup(m => m.GetReportDetail(1,1)).Returns(report1);
+            ProductDTO productToReturn = new ProductDTO
+            {
+                Id = 1,
+                Name = "Panasonic 5000",
+                Description = "Heladera panasonic",
+                Year = 2021
+            };
+            mockProduct.Setup(m => m.GetProductInfo(1)).Returns(productToReturn);
+            ReportController controller = new ReportController(mockReport.Object, mockProduct.Object);
+            var result = controller.GetProductReportDetail(1,1);
+            OkObjectResult okResult = result.Result as OkObjectResult;
+            ReportDTO resultReports = okResult.Value as ReportDTO;
+
+            mockReport.VerifyAll();
+            mockProduct.VerifyAll();
+            Assert.AreEqual(report1,resultReports);
+        }
+
+        [TestMethod]
+        public void TestGetProductReportDetailNotFoundProductID()
+        {
+            Mock<IReportLogic> mockReport = new Mock<IReportLogic>(MockBehavior.Strict);
+            Mock<IProductLogic> mockProduct = new Mock<IProductLogic>(MockBehavior.Strict);
+            mockProduct.Setup(m => m.GetProductInfo(1)).Returns((ProductDTO)null);
+
+            ReportController controller = new ReportController(mockReport.Object, mockProduct.Object);
+            var result = controller.GetProductReportDetail(1,1);
+            ObjectResult resultObject = result.Result as ObjectResult;
+
+            mockReport.VerifyAll();
+            mockProduct.VerifyAll();
+            Assert.AreEqual("No Product found.", resultObject.Value);
+            Assert.AreEqual(404, resultObject.StatusCode);
+        }
     }
 }
