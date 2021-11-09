@@ -75,5 +75,34 @@ namespace VoyageAPI.Logic
             if (result.Count == 0) return new List<ReportDTO>();
             return result;
         }
+
+        public ReportDTO GetReportDetail(int productId, int reportId)
+        {
+            Report report = _context.Reports
+                .Include(report => report.Product)
+                .Include(report => report.Images)
+                .Include(report => report.Employee)
+                .FirstOrDefault(r => r.Id == reportId);
+            if (report == null) throw new IndexOutOfRangeException("Incorrect report ID.");
+            List<string> convertedImagePath = new List<string>();
+            if(report.Images != null)
+            {
+                foreach (Image image in report.Images)
+                {
+                    convertedImagePath.Add(image.Path);
+                }
+            }
+            return new ReportDTO
+            {
+                Id = report.Id,
+                ProductName = report.Product.Name,
+                VisitDate = report.VisitDate.Day + "/" + report.VisitDate.Month + "/" + report.VisitDate.Year,
+                EmployeeName = report.Employee.Name,
+                Summary = report.Summary,
+                Detail = report.Detail,
+                Comment = report.Comment,
+                Images = convertedImagePath
+            };
+        }
     }
 }

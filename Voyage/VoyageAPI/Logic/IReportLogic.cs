@@ -11,5 +11,6 @@ namespace VoyageAPI.Logic
     {
         ICollection<ReportDTO> GetReport(int productId);
         ReportDTO AddReport(int productId, Report report);
+        ReportDTO GetReportDetail(int productId, int reportId);
     }
 }
