@@ -194,13 +194,15 @@ namespace VoyageTest.Logic_Tests
 
             ReportDTO result = reportLogic.AddReport(1,report1);
 
+            DateTime dateNow = DateTime.Now;
+
             ICollection<string> imagesExpected = new List<string>();
             imagesExpected.Add("Imagen1");
             ReportDTO reportExpected1 = new ReportDTO
             {
                 Id = 1,
                 ProductName = "Cocina Samsung",
-                VisitDate = "8/11/2021",
+                VisitDate = dateNow.Day+"/"+dateNow.Month+"/"+dateNow.Year,
                 EmployeeName = "José Pablo",
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
@@ -388,11 +390,13 @@ namespace VoyageTest.Logic_Tests
             ICollection<string> imagesExpected = new List<string>();
             imagesExpected.Add("Imagen1");
             imagesExpected.Add("Imagen2");
+            DateTime dateNow = DateTime.Now;
+            
             ReportDTO reportExpected1 = new ReportDTO
             {
                 Id = 1,
                 ProductName = "Cocina Samsung",
-                VisitDate = "8/11/2021",
+                VisitDate = dateNow.Day + "/" + dateNow.Month + "/" + dateNow.Year,
                 EmployeeName = "José Pablo",
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
