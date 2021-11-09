@@ -38,8 +38,7 @@ namespace VoyageTest.LogicTests
             {
                 Id = 1,
                 Description = "Test",
-                Latitude = "1",
-                Longitude = "1",
+                Direction = "My home",
                 Product = product,
                 State = state,
                 Time = "15:00",
@@ -49,8 +48,7 @@ namespace VoyageTest.LogicTests
             {
                 Id = 2,
                 Description = "Test 2",
-                Latitude = "2",
-                Longitude = "2",
+                Direction = "My home",
                 Product = product,
                 State = state,
                 Time = "16:00",
@@ -76,8 +74,7 @@ namespace VoyageTest.LogicTests
                 {
                     Id = 1,
                     Description = "Test",
-                    Latitude = "1",
-                    Longitude = "1",
+                    Direction = "My home",
                     Product = productDTO,
                     State = VoyageAPI.DTOs.State.Pending,
                     Time = "15:00",
@@ -86,8 +83,7 @@ namespace VoyageTest.LogicTests
                 {
                     Id = 2,
                     Description = "Test 2",
-                    Latitude = "2",
-                    Longitude = "2",
+                    Direction = "My home",
                     Product = productDTO,
                     State = VoyageAPI.DTOs.State.Pending,
                     Time = "16:00",
@@ -136,8 +132,7 @@ namespace VoyageTest.LogicTests
                 {
                     Id = 1,
                     Description = "Test",
-                    Latitude = "1",
-                    Longitude = "1",
+                    Direction = "My home",
                     Product = productDTO,
                     State = VoyageAPI.DTOs.State.InProcess,
                     Time = "15:00",
@@ -146,8 +141,7 @@ namespace VoyageTest.LogicTests
                 {
                     Id = 2,
                     Description = "Test 2",
-                    Latitude = "2",
-                    Longitude = "2",
+                    Direction = "My home",
                     Product = productDTO,
                     State = VoyageAPI.DTOs.State.InProcess,
                     Time = "16:00",
@@ -196,8 +190,7 @@ namespace VoyageTest.LogicTests
                 {
                     Id = 1,
                     Description = "Test",
-                    Latitude = "1",
-                    Longitude = "1",
+                    Direction = "My home",
                     Product = productDTO,
                     State = VoyageAPI.DTOs.State.Finished,
                     Time = "15:00",
@@ -206,8 +199,7 @@ namespace VoyageTest.LogicTests
                 {
                     Id = 2,
                     Description = "Test 2",
-                    Latitude = "2",
-                    Longitude = "2",
+                    Direction = "My home",
                     Product = productDTO,
                     State = VoyageAPI.DTOs.State.Finished,
                     Time = "16:00",

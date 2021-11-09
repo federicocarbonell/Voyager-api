@@ -15,7 +15,6 @@ namespace VoyageAPI.Models
         public State State { get; set; }
         public string Description { get; set; }
         public string Time { get; set; }
-        public string Latitude { get; set; }
-        public string Longitude { get; set; }
+        public string Direction { get; set; }
     }
 }
