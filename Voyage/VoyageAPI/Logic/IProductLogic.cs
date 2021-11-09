@@ -8,7 +8,5 @@ namespace VoyageAPI.Logic
     public interface IProductLogic
     {
         public ProductDTO GetProductInfo(int productId);
-        ICollection<ReportDTO> GetReport(int productId);
-        void AddReport(int productId, Report report);
     }
 }
