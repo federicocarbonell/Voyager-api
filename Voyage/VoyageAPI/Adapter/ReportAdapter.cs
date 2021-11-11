@@ -23,7 +23,9 @@ namespace VoyageAPI.Adapter
                 {
                     Id = report.Id,
                     ProductName = report.Product.Name,
-                    VisitDate = report.VisitDate.Day + "/" + report.VisitDate.Month + "/" + report.VisitDate.Year,
+                    VisitDate = report.VisitDate,
+                    TimeArrival = report.TimeArrival,
+                    TimeResolution = report.TimeResolution,
                     EmployeeName = report.Employee.Name,
                     Summary = report.Summary,
                     Detail = report.Detail,
