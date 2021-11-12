@@ -28,7 +28,8 @@ namespace VoyageTest.Controller_Tests
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = images
+                Image = "abc"
+
             };
 
 
@@ -41,7 +42,8 @@ namespace VoyageTest.Controller_Tests
                 Summary = "Se arreglo la cocina",
                 Detail = "Estaba tapado el caño del gas",
                 Comment = "Proxima vez llevar otro caño",
-                Images = images
+                Image = "abc"
+
             };
             ICollection<ReportDTO> reportsReturn = new List<ReportDTO>();
             reportsReturn.Add(report1);
@@ -116,13 +118,6 @@ namespace VoyageTest.Controller_Tests
         [TestMethod]
         public void TestCreateReportOk()
         {
-            List<Image> images = new List<Image>();
-            images.Add(new Image { Id = 1, Path = "Imagen1"});
-            images.Add(new Image { Id = 2, Path = "Imagen2" });
-
-            ICollection<string> imagesDTO = new List<string>();
-            imagesDTO.Add("Imagen1");
-            imagesDTO.Add("Imagen2");
 
             Report report = new Report
             {
@@ -134,7 +129,8 @@ namespace VoyageTest.Controller_Tests
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = images
+                Image = "abc"
+
             };
 
             ReportDTO reportDTO = new ReportDTO
@@ -146,7 +142,8 @@ namespace VoyageTest.Controller_Tests
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = imagesDTO
+                Image = "abc"
+
             };
 
             ProductDTO productToReturn = new ProductDTO
@@ -173,10 +170,7 @@ namespace VoyageTest.Controller_Tests
         [TestMethod]
         public void TestCrearteProductReportsNotFoundProductId()
         {
-            List<Image> images = new List<Image>();
-            images.Add(new Image { Id = 1, Path = "Imagen1" });
-            images.Add(new Image { Id = 2, Path = "Imagen2" });
-
+            
             Report report = new Report
             {
                 Id = 1,
@@ -187,7 +181,8 @@ namespace VoyageTest.Controller_Tests
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = images
+                Image = "abc"
+
             };
 
             Mock<IReportLogic> mockReport = new Mock<IReportLogic>(MockBehavior.Strict);
@@ -208,10 +203,6 @@ namespace VoyageTest.Controller_Tests
         [TestMethod]
         public void TestCrearteProductReportsArgumentException()
         {
-            List<Image> images = new List<Image>();
-            images.Add(new Image { Id = 1, Path = "Imagen1" });
-            images.Add(new Image { Id = 2, Path = "Imagen2" });
-
             Report report = new Report
             {
                 Id = 1,
@@ -222,7 +213,8 @@ namespace VoyageTest.Controller_Tests
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = images
+                Image = "abc"
+
             };
 
             Mock<IReportLogic> mockReport = new Mock<IReportLogic>(MockBehavior.Strict);
@@ -243,9 +235,6 @@ namespace VoyageTest.Controller_Tests
         [TestMethod]
         public void TestGetProductReportDetailOk()
         {
-            ICollection<string> images = new List<string>();
-            images.Add("Imagen1");
-            images.Add("Imagen2");
             ReportDTO report1 = new ReportDTO
             {
                 Id = 1,
@@ -255,7 +244,8 @@ namespace VoyageTest.Controller_Tests
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = images
+                Image = "abc"
+
             };
 
             Mock<IReportLogic> mockReport = new Mock<IReportLogic>(MockBehavior.Strict);

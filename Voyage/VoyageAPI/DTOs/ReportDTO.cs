@@ -12,6 +12,6 @@ namespace VoyageAPI.DTOs
         public string Summary { get; set; }
         public string Detail { get; set; }
         public string Comment { get; set; }
-        public ICollection<string> Images { get; set; }
+        public string Image { get; set; }
     }
 }

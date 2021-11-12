@@ -16,7 +16,7 @@ namespace VoyageAPI.Models
         public string Summary { get; set; }
         public string Detail { get; set; }
         public string Comment { get; set; }
-        public List<Image> Images { get; set; }
+        public string Image { get; set; }
 
     }
 }

@@ -10,15 +10,9 @@ namespace VoyageAPI.Adapter
         public static List<ReportDTO> mapReport(IQueryable<Report> reports)
         {
             List<ReportDTO> convertedReports = new List<ReportDTO>();
-            List<string> convertedImagePath = new List<string>();
             if (reports == null) return new List<ReportDTO>();
             foreach (Report report in reports)
             {
-                foreach(Image image in report.Images)
-                {
-                    convertedImagePath.Add(image.Path);
-                }
-
                 ReportDTO dto = new ReportDTO
                 {
                     Id = report.Id,
@@ -28,7 +22,7 @@ namespace VoyageAPI.Adapter
                     Summary = report.Summary,
                     Detail = report.Detail,
                     Comment = report.Comment,
-                    Images = convertedImagePath
+                    Image = report.Image
                 };
 
                 convertedReports.Add(dto);

@@ -39,15 +39,6 @@ namespace VoyageTest.Logic_Tests
                 Password = "josepablo"
             };
 
-            Image image = new Image
-            {
-                Id = 1,
-                Path = "Imagen1"
-            };
-
-            List<Image> images = new List<Image>();
-            images.Add(image);
-
             Report report1 = new Report
             {
                 Id = 1,
@@ -59,7 +50,7 @@ namespace VoyageTest.Logic_Tests
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = images
+                Image = "abc"
             };
 
             Report report2 = new Report
@@ -73,7 +64,7 @@ namespace VoyageTest.Logic_Tests
                 Summary = "Se arreglo la cocina",
                 Detail = "Estaba tapado el caño del gas",
                 Comment = "Proxima vez llevar otro caño",
-                Images = images
+                Image = "abc"
             };
 
 
@@ -102,7 +93,7 @@ namespace VoyageTest.Logic_Tests
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = imagesExpected
+                Image = "abc"
             };
 
 
@@ -115,7 +106,7 @@ namespace VoyageTest.Logic_Tests
                 Summary = "Se arreglo la cocina",
                 Detail = "Estaba tapado el caño del gas",
                 Comment = "Proxima vez llevar otro caño",
-                Images = imagesExpected
+                Image = "abc"
             };
             ICollection<ReportDTO> reportsExpected = new List<ReportDTO>();
             reportsExpected.Add(reportExpected1);
@@ -158,15 +149,6 @@ namespace VoyageTest.Logic_Tests
                 Password = "josepablo"
             };
 
-            Image image = new Image
-            {
-                Id = 1,
-                Path = "Imagen1"
-            };
-
-            List<Image> images = new List<Image>();
-            images.Add(image);
-
             Report report1 = new Report
             {
                 Id = 1,
@@ -178,7 +160,7 @@ namespace VoyageTest.Logic_Tests
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = images
+                Image = "abc"
             };
 
 
@@ -193,9 +175,6 @@ namespace VoyageTest.Logic_Tests
             ReportLogic reportLogic = new ReportLogic(context);
 
             ReportDTO result = reportLogic.AddReport(1,report1);
-
-            ICollection<string> imagesExpected = new List<string>();
-            imagesExpected.Add("Imagen1");
             ReportDTO reportExpected1 = new ReportDTO
             {
                 Id = 1,
@@ -205,7 +184,7 @@ namespace VoyageTest.Logic_Tests
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = imagesExpected
+                Image = "abc"
             };
 
             Assert.IsTrue(reportExpected1.Id == result.Id);
@@ -237,14 +216,6 @@ namespace VoyageTest.Logic_Tests
                 Password = "josepablo"
             };
 
-            Image image = new Image
-            {
-                Id = 1,
-                Path = "Imagen1"
-            };
-
-            List<Image> images = new List<Image>();
-            images.Add(image);
 
             Report report1 = new Report
             {
@@ -257,7 +228,8 @@ namespace VoyageTest.Logic_Tests
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = images
+                Image = "abc"
+
             };
 
 
@@ -292,15 +264,6 @@ namespace VoyageTest.Logic_Tests
                 Password = "josepablo"
             };
 
-            Image image = new Image
-            {
-                Id = 1,
-                Path = "Imagen1"
-            };
-
-            List<Image> images = new List<Image>();
-            images.Add(image);
-
             Report report1 = new Report
             {
                 Id = 1,
@@ -312,7 +275,8 @@ namespace VoyageTest.Logic_Tests
                 Summary = null,
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = images
+                Image = "abc"
+
             };
 
 
@@ -348,15 +312,6 @@ namespace VoyageTest.Logic_Tests
                 Password = "josepablo"
             };
 
-            Image image = new Image
-            {
-                Id = 1,
-                Path = "Imagen1"
-            };
-
-            List<Image> images = new List<Image>();
-            images.Add(image);
-
             Report report1 = new Report
             {
                 Id = 1,
@@ -368,7 +323,7 @@ namespace VoyageTest.Logic_Tests
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = images
+                Image = "abc"
             };
 
 
@@ -385,9 +340,6 @@ namespace VoyageTest.Logic_Tests
 
             ReportDTO result = reportLogic.GetReportDetail(1,1);
 
-            ICollection<string> imagesExpected = new List<string>();
-            imagesExpected.Add("Imagen1");
-            imagesExpected.Add("Imagen2");
             ReportDTO reportExpected1 = new ReportDTO
             {
                 Id = 1,
@@ -397,7 +349,8 @@ namespace VoyageTest.Logic_Tests
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = imagesExpected
+                Image = "abc"
+
             };
 
             Assert.IsTrue(reportExpected1.Id == result.Id);
