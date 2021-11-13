@@ -62,7 +62,7 @@ namespace VoyageAPI.Logic
             return result;
         }
 
-        public ReportDTO GetReportDetail(int productId, int reportId)
+        public ReportDTO GetReportDetail(int reportId)
         {
             Report report = _context.Reports
                 .Include(report => report.Product)

@@ -338,7 +338,7 @@ namespace VoyageTest.Logic_Tests
 
             ReportLogic reportLogic = new ReportLogic(context);
 
-            ReportDTO result = reportLogic.GetReportDetail(1,1);
+            ReportDTO result = reportLogic.GetReportDetail(1);
 
             ReportDTO reportExpected1 = new ReportDTO
             {
@@ -383,7 +383,7 @@ namespace VoyageTest.Logic_Tests
 
             ReportLogic reportLogic = new ReportLogic(context);
 
-            reportLogic.GetReportDetail(1,1);
+            reportLogic.GetReportDetail(1);
 
         }
     }

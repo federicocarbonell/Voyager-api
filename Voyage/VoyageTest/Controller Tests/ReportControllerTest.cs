@@ -250,7 +250,7 @@ namespace VoyageTest.Controller_Tests
 
             Mock<IReportLogic> mockReport = new Mock<IReportLogic>(MockBehavior.Strict);
             Mock<IProductLogic> mockProduct = new Mock<IProductLogic>(MockBehavior.Strict);
-            mockReport.Setup(m => m.GetReportDetail(1,1)).Returns(report1);
+            mockReport.Setup(m => m.GetReportDetail(1)).Returns(report1);
             ProductDTO productToReturn = new ProductDTO
             {
                 Id = 1,
@@ -258,9 +258,8 @@ namespace VoyageTest.Controller_Tests
                 Description = "Heladera panasonic",
                 Year = 2021
             };
-            mockProduct.Setup(m => m.GetProductInfo(1)).Returns(productToReturn);
             ReportController controller = new ReportController(mockReport.Object, mockProduct.Object);
-            var result = controller.GetProductReportDetail(1,1);
+            var result = controller.GetReportDetail(1);
             OkObjectResult okResult = result.Result as OkObjectResult;
             ReportDTO resultReports = okResult.Value as ReportDTO;
 
@@ -269,21 +268,6 @@ namespace VoyageTest.Controller_Tests
             Assert.AreEqual(report1,resultReports);
         }
 
-        [TestMethod]
-        public void TestGetProductReportDetailNotFoundProductID()
-        {
-            Mock<IReportLogic> mockReport = new Mock<IReportLogic>(MockBehavior.Strict);
-            Mock<IProductLogic> mockProduct = new Mock<IProductLogic>(MockBehavior.Strict);
-            mockProduct.Setup(m => m.GetProductInfo(1)).Returns((ProductDTO)null);
 
-            ReportController controller = new ReportController(mockReport.Object, mockProduct.Object);
-            var result = controller.GetProductReportDetail(1,1);
-            ObjectResult resultObject = result.Result as ObjectResult;
-
-            mockReport.VerifyAll();
-            mockProduct.VerifyAll();
-            Assert.AreEqual("No Product found.", resultObject.Value);
-            Assert.AreEqual(404, resultObject.StatusCode);
-        }
     }
 }
