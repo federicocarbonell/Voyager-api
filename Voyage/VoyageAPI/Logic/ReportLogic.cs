@@ -23,13 +23,8 @@ namespace VoyageAPI.Logic
             if (report.Product == null) throw new IndexOutOfRangeException("Incorrect product ID.");
             report.Employee = _context.Employees.FirstOrDefault(e => e.Id == report.Employee.Id);
             if (report.Employee == null) throw new IndexOutOfRangeException("Incorrect employee ID.");
-            if (report.VisitDate == null) report.VisitDate = DateTime.Now;
-            else
-            {
-                if (report.VisitDate > DateTime.Now) throw new ArgumentException("The visit date cannot be greater than today.");
-            }
-            if (report.TimeArrival == null) report.TimeArrival = DateTime.Now;
-            if (report.TimeResolution == null) report.TimeResolution = DateTime.Now;
+            if (report.TimeArrival == null) report.TimeArrival = DateTime.Now.ToString();
+            if (report.TimeResolution == null) report.TimeResolution = DateTime.Now.ToString();
             if (report.Summary == null) throw new ArgumentException("The report must contain a summary.");
             if (report.Detail == null) throw new ArgumentException("The report must contain a details.");
             if (report.Comment == null) throw new ArgumentException("The report must contain a comment.");
@@ -43,7 +38,7 @@ namespace VoyageAPI.Logic
             {
                 Id = report.Id,
                 ProductName = report.Product.Name,
-                VisitDate = report.VisitDate.Day + "/" + report.VisitDate.Month + "/" + report.VisitDate.Year,
+                VisitDate = report.VisitDate, 
                 EmployeeName = report.Employee.Name,
                 Summary = report.Summary,
                 Detail = report.Detail,
@@ -74,12 +69,13 @@ namespace VoyageAPI.Logic
             {
                 Id = report.Id,
                 ProductName = report.Product.Name,
-                VisitDate = report.VisitDate.Day + "/" + report.VisitDate.Month + "/" + report.VisitDate.Year,
+                VisitDate = report.VisitDate,
                 EmployeeName = report.Employee.Name,
                 Summary = report.Summary,
                 Detail = report.Detail,
                 Comment = report.Comment,
-                Image = report.Image            };
+                Image = report.Image            
+            };
         }
     }
 }

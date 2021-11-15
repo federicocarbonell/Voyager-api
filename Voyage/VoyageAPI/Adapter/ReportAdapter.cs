@@ -17,14 +17,13 @@ namespace VoyageAPI.Adapter
                 {
                     Id = report.Id,
                     ProductName = report.Product.Name,
-                    VisitDate = report.VisitDate.Day + "/" + report.VisitDate.Month + "/" + report.VisitDate.Year,
+                    VisitDate = report.VisitDate,
                     EmployeeName = report.Employee.Name,
                     Summary = report.Summary,
                     Detail = report.Detail,
                     Comment = report.Comment,
                     Image = report.Image
                 };
-
                 convertedReports.Add(dto);
             }
 
