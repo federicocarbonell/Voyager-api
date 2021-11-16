@@ -332,7 +332,7 @@ namespace VoyageTest.Logic_Tests
             {
                 Id = 1,
                 ProductName = "Cocina Samsung",
-                VisitDate = dateNow.Day + "/" + dateNow.Month + "/" + dateNow.Year,
+                VisitDate = "8/11/2021",
                 EmployeeName = "José Pablo",
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
