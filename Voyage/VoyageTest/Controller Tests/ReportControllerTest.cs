@@ -119,18 +119,14 @@ namespace VoyageTest.Controller_Tests
         public void TestCreateReportOk()
         {
 
-            Report report = new Report
+            ReportToAddDTO report = new ReportToAddDTO
             {
-                Id = 1,
-                Product = new Product { Id = 1 },
-                VisitDate = DateTime.Now.ToString(),
-                TimeArrival = DateTime.Now.ToString(),
-                TimeResolution = DateTime.Now.ToString(),
+                ProductId = 1,
+                ArrivedTime = DateTime.Now.ToString(),
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
                 Image = "abc"
-
             };
 
             ReportDTO reportDTO = new ReportDTO
@@ -170,19 +166,15 @@ namespace VoyageTest.Controller_Tests
         [TestMethod]
         public void TestCrearteProductReportsNotFoundProductId()
         {
-            
-            Report report = new Report
+
+            ReportToAddDTO report = new ReportToAddDTO
             {
-                Id = 1,
-                Product = new Product { Id = 1 },
-                VisitDate = DateTime.Now.ToString(),
-                TimeArrival = DateTime.Now.ToString(),
-                TimeResolution = DateTime.Now.ToString(),
+                ProductId = 1,
+                ArrivedTime = DateTime.Now.ToString(),
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
                 Image = "abc"
-
             };
 
             Mock<IReportLogic> mockReport = new Mock<IReportLogic>(MockBehavior.Strict);
@@ -203,18 +195,14 @@ namespace VoyageTest.Controller_Tests
         [TestMethod]
         public void TestCrearteProductReportsArgumentException()
         {
-            Report report = new Report
+            ReportToAddDTO report = new ReportToAddDTO
             {
-                Id = 1,
-                Product = new Product { Id = 1 },
-                VisitDate = DateTime.Now.ToString(),
-                TimeArrival = DateTime.Now.ToString(),
-                TimeResolution = DateTime.Now.ToString(),
+                ProductId = 1,
+                ArrivedTime = DateTime.Now.ToString(),
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
                 Image = "abc"
-
             };
 
             Mock<IReportLogic> mockReport = new Mock<IReportLogic>(MockBehavior.Strict);

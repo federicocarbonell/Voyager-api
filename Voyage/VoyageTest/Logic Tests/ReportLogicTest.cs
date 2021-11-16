@@ -149,14 +149,11 @@ namespace VoyageTest.Logic_Tests
                 Password = "josepablo"
             };
 
-            Report report1 = new Report
+            ReportToAddDTO report1 = new ReportToAddDTO
             {
-                Id = 1,
-                Product = product,
-                VisitDate = "8/11/2021",
-                TimeArrival = DateTime.Now.ToString(),
-                TimeResolution = DateTime.Now.ToString(),
-                Employee = employee,
+                ProductId = product.Id,
+                ArrivedTime = DateTime.Now.ToString(),
+                EmployeeId = employee.Id,
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
@@ -179,7 +176,7 @@ namespace VoyageTest.Logic_Tests
             {
                 Id = 1,
                 ProductName = "Cocina Samsung",
-                VisitDate = "8/11/2021",
+                VisitDate = DateTime.Now.ToString(),
                 EmployeeName = "José Pablo",
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
@@ -217,19 +214,15 @@ namespace VoyageTest.Logic_Tests
             };
 
 
-            Report report1 = new Report
+            ReportToAddDTO report1 = new ReportToAddDTO
             {
-                Id = 1,
-                Product = product,
-                VisitDate = DateTime.Now.ToString(),
-                TimeArrival = DateTime.Now.ToString(),
-                TimeResolution = DateTime.Now.ToString(),
-                Employee = employee,
+                ProductId = product.Id,
+                ArrivedTime = DateTime.Now.ToString(),
+                EmployeeId = employee.Id,
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
                 Image = "abc"
-
             };
 
 
@@ -264,19 +257,14 @@ namespace VoyageTest.Logic_Tests
                 Password = "josepablo"
             };
 
-            Report report1 = new Report
+            ReportToAddDTO report1 = new ReportToAddDTO
             {
-                Id = 1,
-                Product = product,
-                VisitDate = DateTime.Now.ToString(),
-                TimeArrival = DateTime.Now.ToString(),
-                TimeResolution = DateTime.Now.ToString(),
-                Employee = employee,
-                Summary = null,
+                ProductId = product.Id,
+                ArrivedTime = DateTime.Now.ToString(),
+                EmployeeId = employee.Id,
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
                 Image = "abc"
-
             };
 
 

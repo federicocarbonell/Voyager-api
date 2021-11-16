@@ -61,7 +61,7 @@ namespace VoyageAPI.Controllers
         }
 
         [HttpPost("{productId}")]
-        public ActionResult<ReportDTO> PostReport([FromRoute] int productId, [FromBody] Report report)
+        public ActionResult<ReportDTO> PostReport([FromRoute] int productId, [FromBody] ReportToAddDTO report)
         {
             try
             {
