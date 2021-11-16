@@ -28,7 +28,8 @@ namespace VoyageTest.Controller_Tests
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = images
+                Image = "abc"
+
             };
 
 
@@ -41,7 +42,8 @@ namespace VoyageTest.Controller_Tests
                 Summary = "Se arreglo la cocina",
                 Detail = "Estaba tapado el caño del gas",
                 Comment = "Proxima vez llevar otro caño",
-                Images = images
+                Image = "abc"
+
             };
             ICollection<ReportDTO> reportsReturn = new List<ReportDTO>();
             reportsReturn.Add(report1);
@@ -116,25 +118,15 @@ namespace VoyageTest.Controller_Tests
         [TestMethod]
         public void TestCreateReportOk()
         {
-            List<Image> images = new List<Image>();
-            images.Add(new Image { Id = 1, Path = "Imagen1"});
-            images.Add(new Image { Id = 2, Path = "Imagen2" });
 
-            ICollection<string> imagesDTO = new List<string>();
-            imagesDTO.Add("Imagen1");
-            imagesDTO.Add("Imagen2");
-
-            Report report = new Report
+            ReportToAddDTO report = new ReportToAddDTO
             {
-                Id = 1,
-                Product = new Product { Id = 1 },
-                VisitDate = DateTime.Now,
-                TimeArrival = DateTime.Now,
-                TimeResolution = DateTime.Now,
+                ProductId = 1,
+                ArrivedTime = DateTime.Now.ToString(),
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = images
+                Image = "abc"
             };
 
             ReportDTO reportDTO = new ReportDTO
@@ -146,7 +138,8 @@ namespace VoyageTest.Controller_Tests
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = imagesDTO
+                Image = "abc"
+
             };
 
             ProductDTO productToReturn = new ProductDTO
@@ -173,21 +166,15 @@ namespace VoyageTest.Controller_Tests
         [TestMethod]
         public void TestCrearteProductReportsNotFoundProductId()
         {
-            List<Image> images = new List<Image>();
-            images.Add(new Image { Id = 1, Path = "Imagen1" });
-            images.Add(new Image { Id = 2, Path = "Imagen2" });
 
-            Report report = new Report
+            ReportToAddDTO report = new ReportToAddDTO
             {
-                Id = 1,
-                Product = new Product { Id = 1 },
-                VisitDate = DateTime.Now,
-                TimeArrival = DateTime.Now,
-                TimeResolution = DateTime.Now,
+                ProductId = 1,
+                ArrivedTime = DateTime.Now.ToString(),
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = images
+                Image = "abc"
             };
 
             Mock<IReportLogic> mockReport = new Mock<IReportLogic>(MockBehavior.Strict);
@@ -208,21 +195,14 @@ namespace VoyageTest.Controller_Tests
         [TestMethod]
         public void TestCrearteProductReportsArgumentException()
         {
-            List<Image> images = new List<Image>();
-            images.Add(new Image { Id = 1, Path = "Imagen1" });
-            images.Add(new Image { Id = 2, Path = "Imagen2" });
-
-            Report report = new Report
+            ReportToAddDTO report = new ReportToAddDTO
             {
-                Id = 1,
-                Product = new Product { Id = 1 },
-                VisitDate = DateTime.Now,
-                TimeArrival = DateTime.Now,
-                TimeResolution = DateTime.Now,
+                ProductId = 1,
+                ArrivedTime = DateTime.Now.ToString(),
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = images
+                Image = "abc"
             };
 
             Mock<IReportLogic> mockReport = new Mock<IReportLogic>(MockBehavior.Strict);
@@ -243,9 +223,6 @@ namespace VoyageTest.Controller_Tests
         [TestMethod]
         public void TestGetProductReportDetailOk()
         {
-            ICollection<string> images = new List<string>();
-            images.Add("Imagen1");
-            images.Add("Imagen2");
             ReportDTO report1 = new ReportDTO
             {
                 Id = 1,
@@ -255,12 +232,13 @@ namespace VoyageTest.Controller_Tests
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = images
+                Image = "abc"
+
             };
 
             Mock<IReportLogic> mockReport = new Mock<IReportLogic>(MockBehavior.Strict);
             Mock<IProductLogic> mockProduct = new Mock<IProductLogic>(MockBehavior.Strict);
-            mockReport.Setup(m => m.GetReportDetail(1,1)).Returns(report1);
+            mockReport.Setup(m => m.GetReportDetail(1)).Returns(report1);
             ProductDTO productToReturn = new ProductDTO
             {
                 Id = 1,
@@ -268,9 +246,8 @@ namespace VoyageTest.Controller_Tests
                 Description = "Heladera panasonic",
                 Year = 2021
             };
-            mockProduct.Setup(m => m.GetProductInfo(1)).Returns(productToReturn);
             ReportController controller = new ReportController(mockReport.Object, mockProduct.Object);
-            var result = controller.GetProductReportDetail(1,1);
+            var result = controller.GetReportDetail(1);
             OkObjectResult okResult = result.Result as OkObjectResult;
             ReportDTO resultReports = okResult.Value as ReportDTO;
 
@@ -279,21 +256,6 @@ namespace VoyageTest.Controller_Tests
             Assert.AreEqual(report1,resultReports);
         }
 
-        [TestMethod]
-        public void TestGetProductReportDetailNotFoundProductID()
-        {
-            Mock<IReportLogic> mockReport = new Mock<IReportLogic>(MockBehavior.Strict);
-            Mock<IProductLogic> mockProduct = new Mock<IProductLogic>(MockBehavior.Strict);
-            mockProduct.Setup(m => m.GetProductInfo(1)).Returns((ProductDTO)null);
 
-            ReportController controller = new ReportController(mockReport.Object, mockProduct.Object);
-            var result = controller.GetProductReportDetail(1,1);
-            ObjectResult resultObject = result.Result as ObjectResult;
-
-            mockReport.VerifyAll();
-            mockProduct.VerifyAll();
-            Assert.AreEqual("No Product found.", resultObject.Value);
-            Assert.AreEqual(404, resultObject.StatusCode);
-        }
     }
 }

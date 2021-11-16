@@ -39,41 +39,32 @@ namespace VoyageTest.Logic_Tests
                 Password = "josepablo"
             };
 
-            Image image = new Image
-            {
-                Id = 1,
-                Path = "Imagen1"
-            };
-
-            List<Image> images = new List<Image>();
-            images.Add(image);
-
             Report report1 = new Report
             {
                 Id = 1,
                 Product = product,
-                VisitDate = DateTime.Now,
-                TimeArrival = DateTime.Now,
-                TimeResolution = DateTime.Now,
+                VisitDate = DateTime.Now.ToString(),
+                TimeArrival = DateTime.Now.ToString(),
+                TimeResolution = DateTime.Now.ToString(),
                 Employee = employee,
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = images
+                Image = "abc"
             };
 
             Report report2 = new Report
             {
                 Id = 2,
                 Product = product,
-                VisitDate = DateTime.Now,
-                TimeArrival = DateTime.Now,
-                TimeResolution = DateTime.Now,
+                VisitDate = DateTime.Now.ToString(),
+                TimeArrival = DateTime.Now.ToString(),
+                TimeResolution = DateTime.Now.ToString(),
                 Employee = employee,
                 Summary = "Se arreglo la cocina",
                 Detail = "Estaba tapado el caño del gas",
                 Comment = "Proxima vez llevar otro caño",
-                Images = images
+                Image = "abc"
             };
 
 
@@ -102,7 +93,7 @@ namespace VoyageTest.Logic_Tests
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = imagesExpected
+                Image = "abc"
             };
 
 
@@ -115,7 +106,7 @@ namespace VoyageTest.Logic_Tests
                 Summary = "Se arreglo la cocina",
                 Detail = "Estaba tapado el caño del gas",
                 Comment = "Proxima vez llevar otro caño",
-                Images = imagesExpected
+                Image = "abc"
             };
             ICollection<ReportDTO> reportsExpected = new List<ReportDTO>();
             reportsExpected.Add(reportExpected1);
@@ -158,27 +149,15 @@ namespace VoyageTest.Logic_Tests
                 Password = "josepablo"
             };
 
-            Image image = new Image
+            ReportToAddDTO report1 = new ReportToAddDTO
             {
-                Id = 1,
-                Path = "Imagen1"
-            };
-
-            List<Image> images = new List<Image>();
-            images.Add(image);
-
-            Report report1 = new Report
-            {
-                Id = 1,
-                Product = product,
-                VisitDate = DateTime.Now,
-                TimeArrival = DateTime.Now,
-                TimeResolution = DateTime.Now,
-                Employee = employee,
+                ProductId = product.Id,
+                ArrivedTime = DateTime.Now.ToString(),
+                EmployeeId = employee.Id,
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = images
+                Image = "abc"
             };
 
 
@@ -193,21 +172,16 @@ namespace VoyageTest.Logic_Tests
             ReportLogic reportLogic = new ReportLogic(context);
 
             ReportDTO result = reportLogic.AddReport(1,report1);
-
-            DateTime dateNow = DateTime.Now;
-
-            ICollection<string> imagesExpected = new List<string>();
-            imagesExpected.Add("Imagen1");
             ReportDTO reportExpected1 = new ReportDTO
             {
                 Id = 1,
                 ProductName = "Cocina Samsung",
-                VisitDate = dateNow.Day+"/"+dateNow.Month+"/"+dateNow.Year,
+                VisitDate = DateTime.Now.ToString(),
                 EmployeeName = "José Pablo",
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = imagesExpected
+                Image = "abc"
             };
 
             Assert.IsTrue(reportExpected1.Id == result.Id);
@@ -239,27 +213,16 @@ namespace VoyageTest.Logic_Tests
                 Password = "josepablo"
             };
 
-            Image image = new Image
-            {
-                Id = 1,
-                Path = "Imagen1"
-            };
 
-            List<Image> images = new List<Image>();
-            images.Add(image);
-
-            Report report1 = new Report
+            ReportToAddDTO report1 = new ReportToAddDTO
             {
-                Id = 1,
-                Product = product,
-                VisitDate = DateTime.Now,
-                TimeArrival = DateTime.Now,
-                TimeResolution = DateTime.Now,
-                Employee = employee,
+                ProductId = product.Id,
+                ArrivedTime = DateTime.Now.ToString(),
+                EmployeeId = employee.Id,
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = images
+                Image = "abc"
             };
 
 
@@ -294,27 +257,14 @@ namespace VoyageTest.Logic_Tests
                 Password = "josepablo"
             };
 
-            Image image = new Image
+            ReportToAddDTO report1 = new ReportToAddDTO
             {
-                Id = 1,
-                Path = "Imagen1"
-            };
-
-            List<Image> images = new List<Image>();
-            images.Add(image);
-
-            Report report1 = new Report
-            {
-                Id = 1,
-                Product = product,
-                VisitDate = DateTime.Now,
-                TimeArrival = DateTime.Now,
-                TimeResolution = DateTime.Now,
-                Employee = employee,
-                Summary = null,
+                ProductId = product.Id,
+                ArrivedTime = DateTime.Now.ToString(),
+                EmployeeId = employee.Id,
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = images
+                Image = "abc"
             };
 
 
@@ -350,27 +300,18 @@ namespace VoyageTest.Logic_Tests
                 Password = "josepablo"
             };
 
-            Image image = new Image
-            {
-                Id = 1,
-                Path = "Imagen1"
-            };
-
-            List<Image> images = new List<Image>();
-            images.Add(image);
-
             Report report1 = new Report
             {
                 Id = 1,
                 Product = product,
-                VisitDate = DateTime.Now,
-                TimeArrival = DateTime.Now,
-                TimeResolution = DateTime.Now,
+                VisitDate = "8/11/2021",
+                TimeArrival = DateTime.Now.ToString(),
+                TimeResolution = DateTime.Now.ToString(),
                 Employee = employee,
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = images
+                Image = "abc"
             };
 
 
@@ -385,13 +326,8 @@ namespace VoyageTest.Logic_Tests
 
             ReportLogic reportLogic = new ReportLogic(context);
 
-            ReportDTO result = reportLogic.GetReportDetail(1,1);
+            ReportDTO result = reportLogic.GetReportDetail(1);
 
-            ICollection<string> imagesExpected = new List<string>();
-            imagesExpected.Add("Imagen1");
-            imagesExpected.Add("Imagen2");
-            DateTime dateNow = DateTime.Now;
-            
             ReportDTO reportExpected1 = new ReportDTO
             {
                 Id = 1,
@@ -401,7 +337,8 @@ namespace VoyageTest.Logic_Tests
                 Summary = "Se arreglo la heladera",
                 Detail = "Le faltaba gas",
                 Comment = "Tener cuidado al abrir que esta llena",
-                Images = imagesExpected
+                Image = "abc"
+
             };
 
             Assert.IsTrue(reportExpected1.Id == result.Id);
@@ -434,7 +371,7 @@ namespace VoyageTest.Logic_Tests
 
             ReportLogic reportLogic = new ReportLogic(context);
 
-            reportLogic.GetReportDetail(1,1);
+            reportLogic.GetReportDetail(1);
 
         }
     }

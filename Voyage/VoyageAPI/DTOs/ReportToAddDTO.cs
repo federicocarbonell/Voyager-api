@@ -3,12 +3,11 @@ using System.Collections.Generic;
 
 namespace VoyageAPI.DTOs
 {
-    public class ReportDTO
+    public class ReportToAddDTO
     {
-        public int Id { get; set; }
-        public string ProductName { get; set; }
-        public string VisitDate { get; set; }
-        public string EmployeeName { get; set; }
+        public int ProductId { get; set; }
+        public int EmployeeId { get; set; }
+        public string ArrivedTime { get; set; }
         public string Summary { get; set; }
         public string Detail { get; set; }
         public string Comment { get; set; }

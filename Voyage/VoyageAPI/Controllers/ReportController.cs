@@ -42,21 +42,13 @@ namespace VoyageAPI.Controllers
             }
         }
 
-        [HttpGet("{reportId}/product/{productId}")]
-        public ActionResult<ReportDTO> GetProductReportDetail([FromRoute] int productId, [FromRoute] int reportId)
+        [HttpGet("details/{reportId}")]
+        public ActionResult<ReportDTO> GetReportDetail([FromRoute] int reportId)
         {
             try
             {
-                ProductDTO product = _productLogic.GetProductInfo(productId);
-                if (product == null)
-                {
-                    return NotFound("No Product found.");
-                }
-                else
-                {
-                    ReportDTO report = _reportLogic.GetReportDetail(productId, reportId);
+                    ReportDTO report = _reportLogic.GetReportDetail(reportId);
                     return Ok(report);
-                }
             }
             catch (IndexOutOfRangeException ind)
             {
@@ -69,7 +61,7 @@ namespace VoyageAPI.Controllers
         }
 
         [HttpPost("{productId}")]
-        public ActionResult<ReportDTO> PostReport([FromRoute] int productId, [FromBody] Report report)
+        public ActionResult<ReportDTO> PostReport([FromRoute] int productId, [FromBody] ReportToAddDTO report)
         {
             try
             {
